@@ -1,17 +1,21 @@
 /** Content model. Field names mirror the properties surfaced by the Penpot ArticleCard family. */
 
-export type ContentType = "Article" | "Newsletter" | "Video" | "Audio";
+/** "Post" is a code-side addition for social posts (X, Bluesky, Mastodon, Reddit…); not yet a Penpot ContentTypeBadge variant. */
+export type ContentType = "Article" | "Newsletter" | "Video" | "Audio" | "Post";
 export type ReadingStatus = "Unread" | "In progress" | "Completed";
 /** Penpot ContentCover variants (Tone property). */
 export type CoverTone = "Moss" | "Clay" | "Honey" | "Ink" | "Paper";
 
-export type BlockType = "lead" | "paragraph" | "subheading" | "quote" | "break";
+export type BlockType = "lead" | "paragraph" | "subheading" | "quote" | "break" | "image";
 
 export interface ContentBlock {
   /** Stable id used to anchor highlights. Never reuse or renumber. */
   id: string;
   type: BlockType;
+  /** For images: the caption (may be empty). */
   text: string;
+  /** Image blocks only: absolute source URL. */
+  src?: string;
 }
 
 export interface Article {
@@ -24,8 +28,18 @@ export interface Article {
   type: ContentType;
   topics: string[];
   minutes: number;
+  /** Fallback composition when there is no image (Penpot ContentCover). */
   cover: CoverTone;
   coverCaption?: string;
+  /** Thumbnail captured from the source: absolute URL, or a local /api/media path for screenshots. */
+  image?: string;
+  imageFrom?: "metadata" | "content" | "screenshot";
+  /** Full original URL (url keeps the short display form). */
+  sourceUrl?: string;
+  platform?: string;
+  publishedAt?: string;
+  /** False when only metadata could be captured, not the readable text. */
+  readable?: boolean;
   excerpt: string;
   url: string;
   savedAt: string; // ISO date

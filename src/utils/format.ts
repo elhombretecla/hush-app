@@ -16,7 +16,7 @@ export function collectionProgress(c: Collection, getArticle: (id: string) => Ar
   return `${inProgress.length ? `${inProgress.length} in progress · ` : ""}${time} left`;
 }
 
-export const savedAgo = (iso: string, now = new Date("2026-11-16T15:00:00")) => {
+export const savedAgo = (iso: string, now = new Date()) => {
   const days = Math.round((now.getTime() - new Date(iso).getTime()) / 86400000);
   if (days <= 0) return "saved today";
   if (days === 1) return "saved yesterday";

@@ -3,7 +3,7 @@ import type { Article, ArticleState } from "../../data/types";
 import { BookmarkButton } from "../actions/BookmarkButton";
 import { ButtonLink } from "../actions/Button";
 import { Icon } from "../brand/Icon";
-import { ContentCover } from "./ContentCover";
+import { ArticleMedia } from "./ArticleMedia";
 import { AuthorMetadata, ContentTypeBadge, DurationIndicator, ReadingStatus, durationLabel } from "./meta";
 import "./content.css";
 
@@ -26,7 +26,7 @@ export function ArticleCard({ article, state, layout = "standard", onBookmark, c
   const status = state.status;
   const media = (
     <div className="article-card__media">
-      <ContentCover tone={article.cover} />
+      <ArticleMedia article={article} />
       {(article.type === "Video" || article.type === "Audio") && (
         <span className="article-card__media-badge" aria-hidden="true">
           <Icon name={article.type === "Video" ? "play" : "audio"} />

@@ -1,4 +1,5 @@
 import type { ContentBlock, Highlight } from "../../data/types";
+import { imageSrc } from "../content/ArticleMedia";
 import "./reading.css";
 
 /**
@@ -73,6 +74,13 @@ export function ReadingContentBlock({ block, highlights, author, activeHighlight
       );
     case "quote":
       return <PullQuote block={block} author={author} highlights={highlights} activeHighlight={activeHighlight} onHighlightClick={onHighlightClick} />;
+    case "image":
+      return block.src ? (
+        <figure className="reading-block--image">
+          <img src={imageSrc(block.src)} alt={block.text} loading="lazy" decoding="async" onError={(e) => ((e.currentTarget.closest("figure") as HTMLElement).hidden = true)} />
+          {block.text && <figcaption className="reader__caption">{block.text}</figcaption>}
+        </figure>
+      ) : null;
     case "break":
       return (
         <div className="reading-block reading-block--break" role="separator" aria-hidden="true">

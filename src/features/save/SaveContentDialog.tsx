@@ -1,7 +1,8 @@
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../../app/store";
 import { Button } from "../../components/actions/Button";
+import { TextButton } from "../../components/actions/TextLink";
 import { Icon } from "../../components/brand/Icon";
 import { ArticleCard } from "../../components/content/ArticleCard";
 import { TopicTag } from "../../components/content/meta";
@@ -10,14 +11,15 @@ import { useToast } from "../../components/feedback/Toast";
 import { Select } from "../../components/forms/Select";
 import { FormField, TextInput } from "../../components/forms/TextInput";
 import type { Article, ContentType } from "../../data/types";
-import { lookup, looksLikeUrl, sampleNotYetSaved } from "./catalogue";
+import { findExisting, looksLikeUrl } from "./catalogue";
+import { ExtractError, extractLink } from "./extractClient";
 import "./save.css";
 
 type Step = "paste" | "fetching" | "preview" | "manual" | "duplicate";
 
 /** Penpot "Save New Content" flow: paste a link → preview & organize → saved to inbox. */
 export function SaveContentDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { state, getState, saveArticle } = useStore();
+  const { state, allArticles, getState, saveArticle } = useStore();
   const navigate = useNavigate();
   const toast = useToast();
   const ids = { url: useId(), title: useId(), pub: useId(), min: useId() };
@@ -28,8 +30,10 @@ export function SaveContentDialog({ open, onClose }: { open: boolean; onClose: (
   const [topics, setTopics] = useState<string[]>([]);
   const [collectionId, setCollectionId] = useState("");
   const [manual, setManual] = useState({ title: "", publication: "", minutes: "8", type: "Article" as ContentType });
+  const abort = useRef<AbortController | null>(null);
 
   useEffect(() => {
+    if (!open) abort.current?.abort();
     if (open) {
       setStep("paste");
       setUrl("");
@@ -39,25 +43,37 @@ export function SaveContentDialog({ open, onClose }: { open: boolean; onClose: (
     }
   }, [open]);
 
-  const fetchPreview = () => {
+  const fetchPreview = async () => {
     if (!looksLikeUrl(url)) return setError("That link doesn’t look complete — check for a missing .com");
+    const existing = findExisting(url, allArticles);
+    if (existing) {
+      setDraft(existing);
+      return setStep("duplicate");
+    }
     setError("");
     setStep("fetching");
-    window.setTimeout(() => {
-      const found = lookup(url, state.savedArticles);
-      if (found.status === "in-library") {
-        setDraft(found.article);
-        setStep("duplicate");
-      } else if (found.status === "known") {
-        setDraft(found.article);
-        setTopics(found.article.topics.slice(0, 2));
-        setStep("preview");
-      } else {
-        const host = url.replace(/^https?:\/\//, "").split("/")[0].replace(/^www\./, "");
-        setManual({ title: "", publication: host, minutes: "8", type: "Article" });
-        setStep("manual");
+    abort.current?.abort();
+    abort.current = new AbortController();
+    try {
+      const article = await extractLink(url.trim(), abort.current.signal);
+      const again = findExisting(article.sourceUrl ?? article.url, allArticles);
+      if (again) {
+        setDraft(again);
+        return setStep("duplicate");
       }
-    }, 650);
+      const known = new Set(allArticles.flatMap((a) => a.topics));
+      const text = `${article.title} ${article.excerpt}`.toLowerCase();
+      const matched = [...known].filter((t) => text.includes(t.toLowerCase()));
+      setDraft({ ...article, savedAt: article.savedAt.slice(0, 10) });
+      setTopics(matched.slice(0, 2));
+      setStep("preview");
+    } catch (e) {
+      if ((e as Error).name === "AbortError") return;
+      const host = url.replace(/^https?:\/\//, "").split("/")[0].replace(/^www\./, "");
+      setManual({ title: "", publication: host, minutes: "5", type: "Article" });
+      setError(e instanceof ExtractError ? e.message : "We couldn’t read that link.");
+      setStep("manual");
+    }
   };
 
   const fromManual = (): Article => {
@@ -74,10 +90,12 @@ export function SaveContentDialog({ open, onClose }: { open: boolean; onClose: (
       topics: topics.length ? topics : ["Unsorted"],
       minutes: Math.max(1, Number(manual.minutes) || 5),
       cover: (["Moss", "Clay", "Honey", "Ink", "Paper"] as const)[title.length % 5],
-      excerpt: `Saved from ${url.replace(/^https?:\/\//, "")}. Open the original to read it in full.`,
+      excerpt: `Saved from ${url.replace(/^https?:\/\//, "")}.`,
       url: url.replace(/^https?:\/\//, ""),
-      savedAt: "2026-11-16",
-      body: [{ id: `${id}-1`, type: "lead", text: `This piece was saved from ${url.replace(/^https?:\/\//, "")}. HUSH keeps the link and your notes; the full text is read at the source in this demo build.` }],
+      sourceUrl: /^https?:\/\//.test(url.trim()) ? url.trim() : `https://${url.trim()}`,
+      savedAt: new Date().toISOString().slice(0, 10),
+      readable: false,
+      body: [],
     };
   };
 
@@ -90,7 +108,8 @@ export function SaveContentDialog({ open, onClose }: { open: boolean; onClose: (
   };
 
   const collectionOptions = state.collections.map((c) => ({ value: c.id, label: c.name, dot: c.accent }));
-  const suggestions = draft ? Array.from(new Set([...draft.topics, "Attention", "Cities"])).slice(0, 4) : ["Attention", "Habits", "Design"];
+  const libraryTopics = Array.from(new Set(allArticles.flatMap((a) => a.topics))).sort();
+  const suggestions = Array.from(new Set([...topics, ...libraryTopics])).slice(0, 8);
 
   const footer =
     step === "preview" || step === "manual" ? (
@@ -135,7 +154,7 @@ export function SaveContentDialog({ open, onClose }: { open: boolean; onClose: (
       onClose={onClose}
       width={560}
       title={step === "preview" ? "Looks like a good one" : step === "manual" ? "Add the details" : step === "duplicate" ? "Already in your library" : "Save something worth returning to"}
-      subtitle={step === "paste" || step === "fetching" ? "Articles, newsletters, videos and podcasts all work." : undefined}
+      subtitle={step === "paste" || step === "fetching" ? "Articles, newsletters, videos and posts from X, Bluesky, Mastodon or Reddit." : undefined}
       footer={footer}
     >
       <form
@@ -163,30 +182,28 @@ export function SaveContentDialog({ open, onClose }: { open: boolean; onClose: (
           />
         </FormField>
 
-        {step === "paste" && (
-          <>
-            <div className="save__samples">
-              <span className="type-caption muted">Try a sample link:</span>
-              {sampleNotYetSaved.map((a) => (
-                <button key={a.id} type="button" className="save__sample" onClick={() => setUrl(a.url)}>
-                  <Icon name="link" size={18} />
-                  {a.url}
-                </button>
-              ))}
-            </div>
-            <p className="save__tip">
-              <Icon name="newsletter" />
-              Tip: forward newsletters to julia@in.hush.app and they’ll arrive here.
-            </p>
-          </>
+        {step === "paste" && typeof navigator !== "undefined" && navigator.clipboard?.readText && (
+          <TextButton
+            className="save__paste"
+            onClick={async () => {
+              try {
+                const text = (await navigator.clipboard.readText()).trim();
+                if (text) setUrl(text);
+              } catch {
+                /* clipboard permission denied — the field still works */
+              }
+            }}
+          >
+            <Icon name="link" size={18} /> Paste from clipboard
+          </TextButton>
         )}
 
         {step === "fetching" && (
           <div className="save__loading" role="status">
             <span className="field__spinner" aria-hidden="true" />
             <span>
-              <span className="type-label-sm">Looking up this link…</span>
-              <span className="type-caption muted"> Checking the local demo catalogue</span>
+              <span className="type-label-sm">Reading the page…</span>
+              <span className="type-caption muted"> Title, author, text and a thumbnail</span>
             </span>
           </div>
         )}
@@ -195,7 +212,7 @@ export function SaveContentDialog({ open, onClose }: { open: boolean; onClose: (
 
         {step === "manual" && (
           <>
-            <p className="type-body-sm muted-2">We can’t read pages from the web in this demo. Add a title and we’ll keep the link with your notes.</p>
+            <p className="type-body-sm muted-2">You can still keep the link: add a title and HUSH will save it with your notes, and you can open the original from the reader.</p>
             <FormField label="Title" htmlFor={ids.title} hint="Required">
               <TextInput id={ids.title} value={manual.title} onChange={(e) => setManual({ ...manual, title: e.target.value })} placeholder="Give it a title" />
             </FormField>

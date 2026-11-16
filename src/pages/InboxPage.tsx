@@ -26,8 +26,9 @@ export function InboxPage() {
   const inbox = allArticles.filter((a) => getState(a.id).inInbox).sort((a, b) => b.savedAt.localeCompare(a.savedAt));
   const counts = { All: inbox.length, Unread: inbox.filter((a) => getState(a.id).status === "Unread").length, Started: inbox.filter((a) => getState(a.id).status === "In progress").length };
   const shown = inbox.filter((a) => filter === "All" || (filter === "Unread" ? getState(a.id).status === "Unread" : getState(a.id).status === "In progress"));
-  const today = shown.filter((a) => a.savedAt >= "2026-11-15");
-  const earlier = shown.filter((a) => a.savedAt < "2026-11-15");
+  const dayAgo = new Date(Date.now() - 86_400_000).toISOString().slice(0, 10);
+  const today = shown.filter((a) => a.savedAt.slice(0, 10) >= dayAgo);
+  const earlier = shown.filter((a) => a.savedAt.slice(0, 10) < dayAgo);
 
   const toggle = (id: string, on: boolean) => setSelected((s) => (on ? [...s, id] : s.filter((x) => x !== id)));
   const archiveIds = (ids: string[]) => {

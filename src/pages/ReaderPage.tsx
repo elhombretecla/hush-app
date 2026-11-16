@@ -5,7 +5,7 @@ import { Button, ButtonLink } from "../components/actions/Button";
 import { BookmarkButton } from "../components/actions/BookmarkButton";
 import { IconButton } from "../components/actions/IconButton";
 import { ArticleCard } from "../components/content/ArticleCard";
-import { ContentCover } from "../components/content/ContentCover";
+import { ArticleMedia } from "../components/content/ArticleMedia";
 import { AuthorMetadata, DurationIndicator, durationLabel } from "../components/content/meta";
 import { EmptyState } from "../components/feedback/EmptyState";
 import { Modal } from "../components/feedback/Modal";
@@ -22,6 +22,7 @@ import { ReadingProgress } from "../components/reading/ReadingProgress";
 import { ReadingToolbar } from "../components/reading/ReadingToolbar";
 import { TableOfContents } from "../components/reading/TableOfContents";
 import { AddToCollectionDialog } from "../features/collections/AddToCollectionDialog";
+import { extractLink } from "../features/save/extractClient";
 import { highlightsFromSegments, segmentsFromSelection, type SelectionSegment } from "../features/reader/selection";
 import { useIsCompact } from "../hooks/useMediaQuery";
 import type { Highlight, HighlightColor } from "../data/types";
@@ -36,7 +37,8 @@ export function ReaderPage() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const store = useStore();
-  const { state, getArticle, getState, toggleBookmark, setProgress, markFinished, addHighlights, updateHighlight, removeHighlightGroup } = store;
+  const { state, getArticle, getState, toggleBookmark, setProgress, markFinished, addHighlights, updateHighlight, removeHighlightGroup, replaceArticle } = store;
+  const [refreshing, setRefreshing] = useState(false);
   const article = getArticle(id);
   const articleState = getState(id);
   const compact = useIsCompact();
@@ -212,6 +214,22 @@ export function ReaderPage() {
   const activeGroup = annotation ? groups.find((g) => g[0].groupId === annotation.groupId) : undefined;
   const notes = highlights.filter((h) => h.note).length;
 
+  const isSaved = state.savedArticles.some((a) => a.id === id);
+  const refresh = async () => {
+    if (!article) return;
+    setRefreshing(true);
+    try {
+      const fresh = await extractLink(article.sourceUrl ?? `https://${article.url}`);
+      // Keep the article id (and block ids) stable so progress and bookmarks stay attached.
+      replaceArticle({ ...fresh, id, body: fresh.body.map((b, i) => ({ ...b, id: `${id}-${i + 1}` })) });
+      toast({ tone: "success", message: "Updated from the source" });
+    } catch (e) {
+      toast({ tone: "error", message: (e as Error).message });
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   const finish = () => {
     markFinished(id);
     setLiveProgress(1);
@@ -281,24 +299,28 @@ export function ReaderPage() {
         <article className="reader__article" ref={articleRef} id="main" aria-labelledby="reader-title">
           <header className="reader__head">
             <p className="overline reader__kicker">
-              {article.publication} · {article.type === "Article" ? "Essay" : article.type} · {article.topics[0]}
+              {[article.publication, article.type === "Article" ? (article.id.startsWith("saved-") ? "Article" : "Essay") : article.type, article.topics[0]].filter(Boolean).join(" · ")}
             </p>
             <h1 id="reader-title" className="reader__title">
               {article.title}
             </h1>
-            <p className="reader__dek">{article.dek}</p>
+            {article.dek && <p className="reader__dek">{article.dek}</p>}
             <div className="reader__byline">
               <AuthorMetadata author={article.author} initials={article.authorInitials} publication={article.publication} />
               <div className="reader__meta">
                 <DurationIndicator label={durationLabel(article.type, article.minutes)} />
-                <span className="type-caption">Saved {new Date(article.savedAt).toLocaleDateString("en-GB", { weekday: "long" })}</span>
+                <span className="type-caption">
+                  {article.publishedAt
+                    ? new Date(article.publishedAt).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
+                    : `Saved ${new Date(article.savedAt).toLocaleDateString("en-GB", { weekday: "long" })}`}
+                </span>
               </div>
             </div>
           </header>
 
           <figure className="reader__figure">
-            <div className="reader__image">
-              <ContentCover tone={article.cover} />
+            <div className={`reader__image ${article.imageFrom === "screenshot" ? "reader__image--shot" : ""}`}>
+              <ArticleMedia article={article} />
             </div>
             {article.coverCaption && <figcaption className="reader__caption">{article.coverCaption}</figcaption>}
           </figure>
@@ -308,6 +330,24 @@ export function ReaderPage() {
               <ReadingContentBlock key={b.id} block={b} author={article.author} highlights={byBlock[b.id] ?? []} activeHighlight={annotation?.groupId} onHighlightClick={(h) => openAnnotation(h.groupId)} />
             ))}
           </div>
+
+          {(article.readable === false || (isSaved && !article.image && article.body.length <= 1)) && (
+            <div className="reader__partial">
+              <p className="type-body-md">HUSH could only capture this page’s summary — the full text wasn’t readable from the source (it may need a login or run on JavaScript).</p>
+              <div className="reader__partial-actions">
+                {isSaved && (
+                  <Button intent="primary" onClick={refresh} loading={refreshing}>
+                    Try reading it again
+                  </Button>
+                )}
+                {article.sourceUrl && (
+                  <a className="button button--secondary button--md" href={article.sourceUrl} target="_blank" rel="noopener noreferrer">
+                    Open the original
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
 
           <ReaderFooter article={article} finished={finished} onFinish={finish} onCollect={() => setCollectOpen(true)} />
         </article>

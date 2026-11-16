@@ -8,8 +8,19 @@ The interface is implemented from the four HUSH Penpot files (Design Foundations
 
 ```bash
 npm install
-npm run dev        # http://localhost:5173
+npm run dev        # http://localhost:5173 — app + capture API
+npm run build && npm start   # production: http://localhost:4173
 ```
+
+## Saving links
+
+“Save something” sends the link to a small local server (`server/`), which reads it and returns a HUSH article:
+
+- **Articles, newsletters, blogs** — Open Graph / JSON-LD metadata plus the readable text (Mozilla Readability).
+- **Social posts** — X (via the public FxTwitter API), Bluesky, Mastodon and Reddit public APIs; Threads, Instagram, LinkedIn, TikTok fall back to page metadata.
+- **Video** — YouTube and Vimeo oEmbed.
+
+Thumbnails: metadata image → first image in the post or article → screenshot of the page’s first viewport. Images are cached locally in `.data/media` and served through `/api/image`, so covers keep working when sites block hotlinking. Screenshots need Chromium for Playwright (`npx playwright install --with-deps chromium`); without it HUSH falls back to its own covers.
 
 ## Build and test
 

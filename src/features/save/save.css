@@ -9,3 +9,4 @@
 .save__hint { margin-right: auto; }
 @media (max-width: 640px) { .save__hint { display: none; } }
 .save__preview .bookmark-button { display: none; }
+.save__paste { align-self: flex-start; gap: 6px; }

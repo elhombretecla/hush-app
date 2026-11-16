@@ -10,13 +10,20 @@ export function ReaderFooter({ article, finished, onFinish, onCollect }: { artic
     <footer className="reader-footer">
       <div className="reader-footer__source">
         <AuthorMetadata author={article.author} initials={article.authorInitials} publication={article.publication} />
-        <span className="type-caption reader-footer__url">
-          <Icon name="link" size={18} />
-          {article.url}
-        </span>
+        {article.sourceUrl ? (
+          <a className="type-caption reader-footer__url" href={article.sourceUrl} target="_blank" rel="noopener noreferrer">
+            <Icon name="external" size={18} />
+            Open original · {article.url.split("/")[0]}
+          </a>
+        ) : (
+          <span className="type-caption reader-footer__url">
+            <Icon name="link" size={18} />
+            {article.url}
+          </span>
+        )}
       </div>
       <div className="reader-footer__topics">
-        {article.topics.map((t) => (
+        {article.topics.length > 0 && article.topics.map((t) => (
           <TopicTag key={t} label={t} />
         ))}
       </div>

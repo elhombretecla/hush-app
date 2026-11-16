@@ -38,7 +38,7 @@ export function LibraryPage() {
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    const weekAgo = new Date("2026-11-09").getTime();
+    const weekAgo = Date.now() - 7 * 86_400_000;
     const list = library.filter((a) => {
       const st = getState(a.id);
       if (type !== "All" && a.type !== (type as ContentType)) return false;

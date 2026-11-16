@@ -2,7 +2,7 @@ import type { ContentType, ReadingStatus as Status } from "../../data/types";
 import { Icon, type IconName } from "../brand/Icon";
 import "./content.css";
 
-const TYPE_ICON: Record<ContentType, IconName> = { Article: "article", Newsletter: "newsletter", Video: "video", Audio: "audio" };
+const TYPE_ICON: Record<ContentType, IconName> = { Article: "article", Newsletter: "newsletter", Video: "video", Audio: "audio", Post: "quote" };
 
 /** Penpot ContentTypeBadge — Type: Article · Newsletter · Video · Audio. */
 export function ContentTypeBadge({ type }: { type: ContentType }) {

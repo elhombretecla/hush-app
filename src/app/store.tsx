@@ -17,6 +17,7 @@ interface State {
 type Action =
   | { type: "patchArticle"; id: string; patch: Partial<ArticleState> }
   | { type: "saveArticle"; article: Article; collectionId?: string }
+  | { type: "replaceArticle"; article: Article }
   | { type: "setCollectionMembership"; collectionId: string; articleId: string; member: boolean }
   | { type: "createCollection"; collection: Collection }
   | { type: "addHighlights"; highlights: Highlight[] }
@@ -68,6 +69,15 @@ function reducer(state: State, action: Action): State {
         savedArticles: exists ? state.savedArticles : [action.article, ...state.savedArticles],
         articleState: { ...state.articleState, [action.article.id]: { status: "Unread", progress: 0, bookmarked: false, inInbox: true, archived: false, ...(exists ? state.articleState[action.article.id] : {}) } },
         collections,
+      };
+    }
+    case "replaceArticle": {
+      // Re-captured text: keep only highlights whose text still sits at the same place.
+      const blocks = Object.fromEntries(action.article.body.map((b) => [b.id, b.text]));
+      return {
+        ...state,
+        savedArticles: state.savedArticles.map((a) => (a.id === action.article.id ? { ...action.article, topics: a.topics, savedAt: a.savedAt } : a)),
+        highlights: state.highlights.filter((h) => h.articleId !== action.article.id || blocks[h.blockId]?.slice(h.start, h.end) === h.text),
       };
     }
     case "setCollectionMembership":
@@ -133,6 +143,7 @@ function useStoreValue() {
       archive: (id: string) => dispatch({ type: "patchArticle", id, patch: { archived: true, inInbox: false } }),
       fileFromInbox: (id: string) => dispatch({ type: "patchArticle", id, patch: { inInbox: false } }),
       saveArticle: (article: Article, collectionId?: string) => dispatch({ type: "saveArticle", article, collectionId }),
+      replaceArticle: (article: Article) => dispatch({ type: "replaceArticle", article }),
       setCollectionMembership: (collectionId: string, articleId: string, member: boolean) => dispatch({ type: "setCollectionMembership", collectionId, articleId, member }),
       createCollection: (collection: Collection) => dispatch({ type: "createCollection", collection }),
       addHighlights: (highlights: Highlight[]) => dispatch({ type: "addHighlights", highlights }),

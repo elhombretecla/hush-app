@@ -60,3 +60,39 @@ describe("HUSH app", () => {
     expect(screen.getAllByRole("button", { name: /Highlight with note/ }).length).toBeGreaterThan(0);
   });
 });
+
+describe("Save content", () => {
+  it("reads a link through the HUSH server and saves it to the inbox", async () => {
+    const captured = {
+      id: "saved-abc123",
+      title: "On Keeping a Commonplace Book",
+      dek: "",
+      author: "Claire Brooks",
+      authorInitials: "CB",
+      publication: "Notebook Review",
+      type: "Article",
+      topics: [],
+      minutes: 7,
+      cover: "Paper",
+      image: "https://notebookreview.com/covers/commonplace.jpg",
+      imageFrom: "metadata",
+      excerpt: "A notebook for other people's sentences.",
+      url: "notebookreview.com/commonplace-book",
+      sourceUrl: "https://notebookreview.com/commonplace-book",
+      savedAt: "2026-11-16T10:00:00.000Z",
+      body: [{ id: "saved-abc123-1", type: "lead", text: "For three centuries readers kept a book of other people's sentences." }],
+      readable: true,
+    };
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ article: captured }) });
+    vi.stubGlobal("fetch", fetchMock);
+    renderAt("/inbox");
+    await userEvent.click(screen.getAllByRole("button", { name: /Save/ }).find((b) => b.textContent?.includes("Save something"))!);
+    await userEvent.type(screen.getByPlaceholderText(/Paste a link/), "https://notebookreview.com/commonplace-book");
+    await userEvent.click(screen.getByRole("button", { name: "Fetch preview" }));
+    expect(await screen.findByRole("heading", { name: "Looks like a good one" })).toBeInTheDocument();
+    expect(fetchMock).toHaveBeenCalledWith("/api/extract", expect.objectContaining({ method: "POST" }));
+    await userEvent.click(screen.getByRole("button", { name: "Save to inbox" }));
+    expect(await screen.findByRole("link", { name: "On Keeping a Commonplace Book" })).toHaveAttribute("href", "/read/saved-abc123");
+    vi.unstubAllGlobals();
+  });
+});
