@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Page } from "../app/Page";
 import { useStore } from "../app/store";
-import { ButtonLink } from "../components/actions/Button";
+import { Button, ButtonLink } from "../components/actions/Button";
 import { SegmentedControl } from "../components/actions/SegmentedControl";
 import { Icon } from "../components/brand/Icon";
 import { ContentListItem } from "../components/content/ContentListItem";
 import { EmptyState } from "../components/feedback/EmptyState";
+import { Modal } from "../components/feedback/Modal";
 import { useToast } from "../components/feedback/Toast";
 import { MobileTopBar } from "../components/navigation/MobileTopBar";
 import { AddToCollectionDialog } from "../features/collections/AddToCollectionDialog";
@@ -16,12 +17,13 @@ import "./pages.css";
 const FILTERS = ["All", "Unread", "Started"] as const;
 
 export function InboxPage() {
-  const { allArticles, getState, archive, markFinished, fileFromInbox } = useStore();
+  const { state, allArticles, getArticle, getState, archive, markFinished, fileFromInbox, deleteArticle, restoreArticle } = useStore();
   const compact = useIsCompact();
   const toast = useToast();
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("All");
   const [selected, setSelected] = useState<string[]>([]);
   const [collectFor, setCollectFor] = useState<string[] | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState<string[] | null>(null);
 
   const inbox = allArticles.filter((a) => getState(a.id).inInbox).sort((a, b) => b.savedAt.localeCompare(a.savedAt));
   const counts = { All: inbox.length, Unread: inbox.filter((a) => getState(a.id).status === "Unread").length, Started: inbox.filter((a) => getState(a.id).status === "In progress").length };
@@ -36,6 +38,19 @@ export function InboxPage() {
     setSelected([]);
     toast({ tone: "neutral", message: ids.length === 1 ? "Moved to archive" : `${ids.length} pieces archived`, action: { label: "Undo", onClick: () => ids.forEach((id) => fileFromInbox(id)) } });
   };
+
+  const deleteIds = (ids: string[]) => {
+    const snapshots = ids.map(deleteArticle).filter((x): x is NonNullable<typeof x> => !!x);
+    setSelected([]);
+    setConfirmDelete(null);
+    toast({
+      tone: "neutral",
+      message: snapshots.length === 1 ? `Deleted “${snapshots[0].article.title.slice(0, 40)}${snapshots[0].article.title.length > 40 ? "…" : ""}”` : `${snapshots.length} pieces deleted`,
+      action: { label: "Undo", onClick: () => snapshots.forEach(restoreArticle) },
+    });
+  };
+  const deleteCount = confirmDelete?.length ?? 0;
+  const highlightCount = new Set(state.highlights.filter((h) => confirmDelete?.includes(h.articleId)).map((h) => h.groupId)).size;
 
   const group = (label: string, items: typeof shown) =>
     items.length > 0 && (
@@ -101,11 +116,38 @@ export function InboxPage() {
             <Icon name="archive" />
             Archive
           </button>
+          <button type="button" className="bulk-bar__action bulk-bar__action--danger" onClick={() => setConfirmDelete(selected)}>
+            <Icon name="trash" />
+            Delete
+          </button>
           <button type="button" className="bulk-bar__close" aria-label="Clear selection" onClick={() => setSelected([])}>
             <Icon name="close" />
           </button>
         </div>
       )}
+
+      {/* Penpot ConfirmationDialog */}
+      <Modal
+        open={!!confirmDelete}
+        onClose={() => setConfirmDelete(null)}
+        title={deleteCount === 1 ? "Delete from your library?" : `Delete ${deleteCount} pieces?`}
+        width={440}
+        footer={
+          <>
+            <Button intent="secondary" onClick={() => setConfirmDelete(null)}>
+              Keep {deleteCount === 1 ? "it" : "them"}
+            </Button>
+            <Button intent="destructive" onClick={() => confirmDelete && deleteIds(confirmDelete)}>
+              Delete{deleteCount > 1 ? ` ${deleteCount}` : ""}
+            </Button>
+          </>
+        }
+      >
+        <p className="type-body-md muted-2">
+          {deleteCount === 1 ? `“${getArticle(confirmDelete![0])?.title}” will` : `These ${deleteCount} pieces will`} be removed from your library and collections
+          {highlightCount ? `, together with ${highlightCount} ${highlightCount === 1 ? "highlight" : "highlights"}` : ""}. You can undo this for a few seconds.
+        </p>
+      </Modal>
 
       <AddToCollectionDialog
         open={!!collectFor}

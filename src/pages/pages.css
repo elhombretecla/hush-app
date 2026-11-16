@@ -53,6 +53,8 @@
 .bulk-bar__action,
 .bulk-bar__close { display: inline-flex; align-items: center; gap: var(--space-8); height: 40px; padding: 0 var(--space-12); border-radius: var(--radius-md); font-size: var(--type-label-sm-font-size); font-weight: var(--font-weight-medium); white-space: nowrap; }
 .bulk-bar__close { padding: 0 var(--space-8); }
+.bulk-bar__action--danger { color: var(--palette-clay-300); }
+:root[data-theme="night"] .bulk-bar__action--danger { color: var(--palette-red-700); }
 .bulk-bar__action:hover,
 .bulk-bar__close:hover { background: color-mix(in srgb, currentColor 14%, transparent); }
 

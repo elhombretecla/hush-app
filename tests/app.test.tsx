@@ -113,3 +113,19 @@ describe("Deleting a piece", () => {
     expect(JSON.parse(localStorage.getItem("hush:v1")!).highlights.some((h: { articleId: string }) => h.articleId === "gardens")).toBe(true);
   });
 });
+
+describe("Inbox bulk delete", () => {
+  it("deletes the selected pieces after confirmation and can undo", async () => {
+    renderAt("/inbox");
+    await userEvent.click(screen.getByRole("checkbox", { name: "Select “The Internet Should Have Gardens”" }));
+    await userEvent.click(screen.getByRole("checkbox", { name: "Select “What We Keep When We Take Notes”" }));
+    await userEvent.click(within(screen.getByRole("toolbar", { name: "Selected items" })).getByRole("button", { name: "Delete" }));
+    const dialog = screen.getByRole("dialog", { name: "Delete 2 pieces?" });
+    await userEvent.click(within(dialog).getByRole("button", { name: "Delete 2" }));
+    expect(screen.queryByRole("link", { name: "The Internet Should Have Gardens" })).not.toBeInTheDocument();
+    expect(screen.getByText("2 pieces deleted")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Undo" }));
+    expect(await screen.findByRole("link", { name: "The Internet Should Have Gardens" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "What We Keep When We Take Notes" })).toBeInTheDocument();
+  });
+});
