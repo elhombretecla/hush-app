@@ -18,9 +18,31 @@ export const VARIANT_NOTES: Record<string, string> = {
   ArticleCard: "Code shows a captured thumbnail when there is one; ContentCover is the fallback.",
 };
 
-export type PenpotEntry = { name: string; variants?: Record<string, string[]> };
-export const penpotPages = manifest.pages as { page: string; components: PenpotEntry[] }[];
-export const penpotBrand = manifest.brand;
+/** Variant values that exist only in code (shown as extra chips next to the Penpot ones). */
+export const CODE_VARIANTS: Record<string, Record<string, string[]>> = {
+  ContentTypeBadge: { Type: ["Post"] },
+  ReadingContentBlock: { Type: ["Image"] },
+  TextHighlight: { Colour: ["Honey", "Moss", "Clay"] },
+};
+/** Penpot variant values the code does not implement. */
+export const MISSING_VARIANTS: Record<string, Record<string, string[]>> = {
+  Toggle: { State: ["Disabled"] },
+};
+
+export type PenpotEntry = { name: string; variants?: Record<string, string[]>; boardId?: string };
+type Manifest = { file: string; baseUrl?: string; teamId?: string; fileId?: string; pages: { page: string; pageId?: string; components: PenpotEntry[] }[]; brand: string[] };
+const m = manifest as Manifest;
+export const penpotPages = m.pages;
+export const penpotBrand = m.brand;
+export const penpotFile = m.file;
+
+/** Deep link into the Penpot workspace — same URL as "Copy link" on a board. */
+export function penpotUrl(pageId?: string, boardId?: string) {
+  if (!m.baseUrl || !m.teamId || !m.fileId || !pageId) return undefined;
+  const q = new URLSearchParams({ screen: "workspace", "team-id": m.teamId, "file-id": m.fileId, "page-id": pageId, layout: "layers" });
+  if (boardId) q.set("board-id", boardId);
+  return `${m.baseUrl.replace(/\/$/, "")}/?${q.toString()}`;
+}
 
 type StoryExport = { name?: string; parameters?: { penpot?: string[]; codeOnly?: string; penpotBrand?: string[] } };
 export type StoryModule = Record<string, unknown> & { default: { title: string; parameters?: StoryExport["parameters"] } };
@@ -34,6 +56,9 @@ const sanitize = (s: string) =>
     .replace(/^-+/, "")
     .replace(/-+$/, "");
 const storyId = (title: string, exportName: string) => `${sanitize(title)}--${sanitize(exportName.replace(/([a-z])([A-Z])/g, "$1 $2"))}`;
+
+/** "WithLeadingIcon" → "With leading icon" (stories without an explicit name). */
+const humanize = (exportName: string) => exportName.replace(/([a-z])([A-Z])/g, (_, a: string, b: string) => `${a} ${b.toLowerCase()}`);
 
 export interface StoryRef {
   id: string;
@@ -54,7 +79,7 @@ export function collectStories(modules: Record<string, StoryModule>) {
     for (const exportName of order) {
       const s = mod[exportName] as StoryExport | undefined;
       if (exportName === "default" || !s || typeof s !== "object" || Array.isArray(s)) continue;
-      const ref = { id: storyId(meta.title, exportName), title: meta.title, story: s.name ?? exportName };
+      const ref = { id: storyId(meta.title, exportName), title: meta.title, story: s.name ?? humanize(exportName) };
       if (s.parameters?.codeOnly) codeOnly.push({ ...ref, note: s.parameters.codeOnly });
       // A story's own mapping wins; otherwise the file-level (meta) mapping applies, except to code-only stories.
       const names = s.parameters?.penpot ?? (s.parameters?.codeOnly ? [] : meta.parameters?.penpot ?? []);
@@ -69,8 +94,10 @@ export function syncReport(modules: Record<string, StoryModule>) {
   const known = new Set(penpotPages.flatMap((p) => p.components.map((c) => c.name)));
   const pages = penpotPages.map((p) => ({
     page: p.page,
+    url: penpotUrl(p.pageId),
     rows: p.components.map((c) => ({
       ...c,
+      url: penpotUrl(p.pageId, c.boardId),
       stories: byComponent.get(c.name) ?? [],
       status: byComponent.has(c.name) ? ("both" as const) : PENPOT_ONLY[c.name] ? ("penpot" as const) : ("missing" as const),
       note: PENPOT_ONLY[c.name] ?? VARIANT_NOTES[c.name],

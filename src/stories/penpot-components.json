@@ -1,8 +1,12 @@
 {
   "file": "HUSH / UI Kit & Components",
+  "baseUrl": "https://design.penpot.dev",
+  "teamId": "ecadbb64-d837-81ce-8008-f47028d0c1d7",
+  "fileId": "ecadbb64-d837-81ce-8008-f4737c02889d",
   "pages": [
     {
       "page": "01 · Buttons & Actions",
+      "pageId": "ecadbb64-d837-81ce-8008-f4737c02889e",
       "components": [
         {
           "name": "BookmarkButton",
@@ -13,7 +17,8 @@
               "Hover",
               "Disabled"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47c81071e6c"
         },
         {
           "name": "Button",
@@ -36,133 +41,176 @@
               "Focus",
               "Disabled"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47b86ff6b8a"
         },
         {
-          "name": "Icon / archive"
+          "name": "Icon / archive",
+          "boardId": "843924a2-43b6-804b-8008-f47a7b5ebf6c"
         },
         {
-          "name": "Icon / arrow-left"
+          "name": "Icon / arrow-left",
+          "boardId": "843924a2-43b6-804b-8008-f47a7b110028"
         },
         {
-          "name": "Icon / arrow-right"
+          "name": "Icon / arrow-right",
+          "boardId": "843924a2-43b6-804b-8008-f47a7b29f347"
         },
         {
-          "name": "Icon / article"
+          "name": "Icon / article",
+          "boardId": "843924a2-43b6-804b-8008-f47a7c1dc77a"
         },
         {
-          "name": "Icon / audio"
+          "name": "Icon / audio",
+          "boardId": "843924a2-43b6-804b-8008-f47a7bca18a6"
         },
         {
-          "name": "Icon / bookmark"
+          "name": "Icon / bookmark",
+          "boardId": "843924a2-43b6-804b-8008-f47a79cfdde6"
         },
         {
-          "name": "Icon / bookmark-filled"
+          "name": "Icon / bookmark-filled",
+          "boardId": "843924a2-43b6-804b-8008-f47a6e4d8547"
         },
         {
-          "name": "Icon / check"
+          "name": "Icon / check",
+          "boardId": "843924a2-43b6-804b-8008-f47a7aaa6a59"
         },
         {
-          "name": "Icon / chevron-down"
+          "name": "Icon / chevron-down",
+          "boardId": "843924a2-43b6-804b-8008-f47a7af76974"
         },
         {
-          "name": "Icon / chevron-left"
+          "name": "Icon / chevron-left",
+          "boardId": "843924a2-43b6-804b-8008-f47a7ac3c7ba"
         },
         {
-          "name": "Icon / chevron-right"
+          "name": "Icon / chevron-right",
+          "boardId": "843924a2-43b6-804b-8008-f47a7add7cf6"
         },
         {
-          "name": "Icon / clock"
+          "name": "Icon / clock",
+          "boardId": "843924a2-43b6-804b-8008-f47a7b7ba589"
         },
         {
-          "name": "Icon / close"
+          "name": "Icon / close",
+          "boardId": "843924a2-43b6-804b-8008-f47a7a908856"
         },
         {
-          "name": "Icon / collection"
+          "name": "Icon / collection",
+          "boardId": "843924a2-43b6-804b-8008-f47a7a23b064"
         },
         {
-          "name": "Icon / external"
+          "name": "Icon / external",
+          "boardId": "843924a2-43b6-804b-8008-f47a7d518da7"
         },
         {
-          "name": "Icon / filter"
+          "name": "Icon / filter",
+          "boardId": "843924a2-43b6-804b-8008-f47a7cc85f2f"
         },
         {
-          "name": "Icon / focus"
+          "name": "Icon / focus",
+          "boardId": "843924a2-43b6-804b-8008-f47a7a3eae73"
         },
         {
-          "name": "Icon / grid"
+          "name": "Icon / grid",
+          "boardId": "843924a2-43b6-804b-8008-f47a7ce1be30"
         },
         {
-          "name": "Icon / highlight"
+          "name": "Icon / highlight",
+          "boardId": "843924a2-43b6-804b-8008-f47a79ea3c37"
         },
         {
-          "name": "Icon / home"
+          "name": "Icon / home",
+          "boardId": "843924a2-43b6-804b-8008-f47a6e2a80d4"
         },
         {
-          "name": "Icon / inbox"
+          "name": "Icon / inbox",
+          "boardId": "843924a2-43b6-804b-8008-f47a7991c8ca"
         },
         {
-          "name": "Icon / library"
+          "name": "Icon / library",
+          "boardId": "843924a2-43b6-804b-8008-f47a79b0d6a3"
         },
         {
-          "name": "Icon / link"
+          "name": "Icon / link",
+          "boardId": "843924a2-43b6-804b-8008-f47a7d19b1b1"
         },
         {
-          "name": "Icon / list"
+          "name": "Icon / list",
+          "boardId": "843924a2-43b6-804b-8008-f47a7cff8337"
         },
         {
-          "name": "Icon / minus"
+          "name": "Icon / minus",
+          "boardId": "843924a2-43b6-804b-8008-f47a7da08190"
         },
         {
-          "name": "Icon / moon"
+          "name": "Icon / moon",
+          "boardId": "843924a2-43b6-804b-8008-f47a7c5572e6"
         },
         {
-          "name": "Icon / more"
+          "name": "Icon / more",
+          "boardId": "843924a2-43b6-804b-8008-f47a7b44d368"
         },
         {
-          "name": "Icon / newsletter"
+          "name": "Icon / newsletter",
+          "boardId": "843924a2-43b6-804b-8008-f47a7c027e49"
         },
         {
-          "name": "Icon / note"
+          "name": "Icon / note",
+          "boardId": "843924a2-43b6-804b-8008-f47a7a064182"
         },
         {
-          "name": "Icon / pause"
+          "name": "Icon / pause",
+          "boardId": "843924a2-43b6-804b-8008-f47a7bb05d2a"
         },
         {
-          "name": "Icon / play"
+          "name": "Icon / play",
+          "boardId": "843924a2-43b6-804b-8008-f47a7b971b7b"
         },
         {
-          "name": "Icon / plus"
+          "name": "Icon / plus",
+          "boardId": "843924a2-43b6-804b-8008-f47a7a59c3d4"
         },
         {
-          "name": "Icon / quote"
+          "name": "Icon / quote",
+          "boardId": "843924a2-43b6-804b-8008-f47a7d87bd64"
         },
         {
-          "name": "Icon / search"
+          "name": "Icon / search",
+          "boardId": "843924a2-43b6-804b-8008-f47a6e6634c0"
         },
         {
-          "name": "Icon / settings"
+          "name": "Icon / settings",
+          "boardId": "843924a2-43b6-804b-8008-f47a7a73a46c"
         },
         {
-          "name": "Icon / share"
+          "name": "Icon / share",
+          "boardId": "843924a2-43b6-804b-8008-f47a7c87a588"
         },
         {
-          "name": "Icon / sun"
+          "name": "Icon / sun",
+          "boardId": "843924a2-43b6-804b-8008-f47a7c39d92a"
         },
         {
-          "name": "Icon / tag"
+          "name": "Icon / tag",
+          "boardId": "843924a2-43b6-804b-8008-f47a7d6caed0"
         },
         {
-          "name": "Icon / trash"
+          "name": "Icon / trash",
+          "boardId": "843924a2-43b6-804b-8008-f47a7cae95c6"
         },
         {
-          "name": "Icon / type"
+          "name": "Icon / type",
+          "boardId": "843924a2-43b6-804b-8008-f47a7c6ec84f"
         },
         {
-          "name": "Icon / user"
+          "name": "Icon / user",
+          "boardId": "843924a2-43b6-804b-8008-f47a7d3634e8"
         },
         {
-          "name": "Icon / video"
+          "name": "Icon / video",
+          "boardId": "843924a2-43b6-804b-8008-f47a7be7233b"
         },
         {
           "name": "IconButton",
@@ -177,7 +225,8 @@
               "Hover",
               "Disabled"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47beed9c4b8"
         },
         {
           "name": "Segment",
@@ -186,7 +235,8 @@
               "True",
               "False"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47ca62cbbd9"
         },
         {
           "name": "SegmentedControl",
@@ -195,7 +245,8 @@
               "3",
               "2"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47cb80815c1"
         },
         {
           "name": "TextLink",
@@ -205,27 +256,34 @@
               "Hover",
               "Muted"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47c9821220f"
         }
       ]
     },
     {
       "page": "02 · Navigation",
+      "pageId": "843924a2-43b6-804b-8008-f47a49f78db0",
       "components": [
         {
-          "name": "AppHeader"
+          "name": "AppHeader",
+          "boardId": "843924a2-43b6-804b-8008-f47d99967aa8"
         },
         {
-          "name": "BackButton"
+          "name": "BackButton",
+          "boardId": "843924a2-43b6-804b-8008-f47daf2dfa35"
         },
         {
-          "name": "Breadcrumb"
+          "name": "Breadcrumb",
+          "boardId": "843924a2-43b6-804b-8008-f47d9967ebbe"
         },
         {
-          "name": "DesktopSidebar"
+          "name": "DesktopSidebar",
+          "boardId": "843924a2-43b6-804b-8008-f47d5bd877e2"
         },
         {
-          "name": "MobileBottomNavigation"
+          "name": "MobileBottomNavigation",
+          "boardId": "843924a2-43b6-804b-8008-f47dd5583cab"
         },
         {
           "name": "MobileTabItem",
@@ -234,7 +292,8 @@
               "Active",
               "Inactive"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47cfee80d55"
         },
         {
           "name": "MobileTopBar",
@@ -244,10 +303,12 @@
               "Title",
               "Reader"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47dcc578ea6"
         },
         {
-          "name": "ProfileMenu"
+          "name": "ProfileMenu",
+          "boardId": "843924a2-43b6-804b-8008-f47de7a76f08"
         },
         {
           "name": "SidebarNavItem",
@@ -257,10 +318,12 @@
               "Hover",
               "Active"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47cf07d16d1"
         },
         {
-          "name": "StatusBar"
+          "name": "StatusBar",
+          "boardId": "843924a2-43b6-804b-8008-f48b6c9c3f45"
         },
         {
           "name": "Tab",
@@ -269,10 +332,12 @@
               "Active",
               "Inactive"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47d0dc65b69"
         },
         {
-          "name": "Tabs"
+          "name": "Tabs",
+          "boardId": "843924a2-43b6-804b-8008-f47daf435281"
         },
         {
           "name": "ThemeOption",
@@ -286,15 +351,18 @@
               "True",
               "False"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47d2637957b"
         },
         {
-          "name": "ThemeSwitcher"
+          "name": "ThemeSwitcher",
+          "boardId": "843924a2-43b6-804b-8008-f47daf5ddf99"
         }
       ]
     },
     {
       "page": "03 · Inputs & Forms",
+      "pageId": "843924a2-43b6-804b-8008-f47a49f84fe5",
       "components": [
         {
           "name": "Checkbox",
@@ -307,10 +375,12 @@
               "Default",
               "Disabled"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47eadd768ae"
         },
         {
-          "name": "FormError"
+          "name": "FormError",
+          "boardId": "843924a2-43b6-804b-8008-f47ee5dac08a"
         },
         {
           "name": "FormField",
@@ -319,7 +389,8 @@
               "Default",
               "Error"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47ef6004c7f"
         },
         {
           "name": "Radio",
@@ -328,7 +399,8 @@
               "True",
               "False"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47ec77749d1"
         },
         {
           "name": "SearchInput",
@@ -338,7 +410,8 @@
               "Focus",
               "Filled"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47e4a907b24"
         },
         {
           "name": "Select",
@@ -347,7 +420,8 @@
               "Default",
               "Open"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47e965cb998"
         },
         {
           "name": "TextArea",
@@ -356,7 +430,8 @@
               "Default",
               "Focus"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47e7fbc3647"
         },
         {
           "name": "TextInput",
@@ -368,7 +443,8 @@
               "Error",
               "Disabled"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47e2be1e890"
         },
         {
           "name": "Toggle",
@@ -381,7 +457,8 @@
               "Default",
               "Disabled"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47ed9d2fdba"
         },
         {
           "name": "URLInput",
@@ -393,12 +470,14 @@
               "Valid",
               "Error"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47e6410f0ec"
         }
       ]
     },
     {
       "page": "04 · Content Cards",
+      "pageId": "843924a2-43b6-804b-8008-f47a49f8c44d",
       "components": [
         {
           "name": "ArticleCard",
@@ -419,10 +498,12 @@
               "In progress",
               "Completed"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f4832e287b21"
         },
         {
-          "name": "AuthorMetadata"
+          "name": "AuthorMetadata",
+          "boardId": "843924a2-43b6-804b-8008-f47f65f06c6c"
         },
         {
           "name": "CollectionCard",
@@ -431,7 +512,8 @@
               "Default",
               "Hover"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f48369423037"
         },
         {
           "name": "ContentCover",
@@ -443,7 +525,8 @@
               "Ink",
               "Paper"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47fa3340cf4"
         },
         {
           "name": "ContentListItem",
@@ -453,7 +536,8 @@
               "Hover",
               "Selected"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f4839dcbcf80"
         },
         {
           "name": "ContentTypeBadge",
@@ -464,10 +548,12 @@
               "Video",
               "Audio"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47f36e9df12"
         },
         {
-          "name": "DurationIndicator"
+          "name": "DurationIndicator",
+          "boardId": "843924a2-43b6-804b-8008-f47f65dbceac"
         },
         {
           "name": "ReadingStatus",
@@ -477,7 +563,8 @@
               "In progress",
               "Completed"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47f5b3504ec"
         },
         {
           "name": "TopicTag",
@@ -486,30 +573,38 @@
               "Default",
               "Selected"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f47f4dc6f10e"
         }
       ]
     },
     {
       "page": "05 · Reading Components",
+      "pageId": "843924a2-43b6-804b-8008-f47a49f99a88",
       "components": [
         {
-          "name": "Annotation"
+          "name": "Annotation",
+          "boardId": "843924a2-43b6-804b-8008-f48494d21f39"
         },
         {
-          "name": "HighlightActionBar"
+          "name": "HighlightActionBar",
+          "boardId": "843924a2-43b6-804b-8008-f484482dcd37"
         },
         {
-          "name": "PullQuote"
+          "name": "PullQuote",
+          "boardId": "843924a2-43b6-804b-8008-f48494892f7a"
         },
         {
-          "name": "ReaderFooter"
+          "name": "ReaderFooter",
+          "boardId": "843924a2-43b6-804b-8008-f4855ff21145"
         },
         {
-          "name": "ReaderHeader"
+          "name": "ReaderHeader",
+          "boardId": "843924a2-43b6-804b-8008-f4853f5a3059"
         },
         {
-          "name": "ReadingCompletion"
+          "name": "ReadingCompletion",
+          "boardId": "843924a2-43b6-804b-8008-f485705fa114"
         },
         {
           "name": "ReadingContentBlock",
@@ -520,10 +615,12 @@
               "Subheading",
               "Section break"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f484911fce54"
         },
         {
-          "name": "ReadingPreferences"
+          "name": "ReadingPreferences",
+          "boardId": "843924a2-43b6-804b-8008-f484ef28c80b"
         },
         {
           "name": "ReadingProgress",
@@ -534,13 +631,16 @@
               "62",
               "100"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f483f4f048b5"
         },
         {
-          "name": "ReadingToolbar"
+          "name": "ReadingToolbar",
+          "boardId": "843924a2-43b6-804b-8008-f484bdb548f1"
         },
         {
-          "name": "TableOfContents"
+          "name": "TableOfContents",
+          "boardId": "843924a2-43b6-804b-8008-f484be081b79"
         },
         {
           "name": "TextHighlight",
@@ -550,12 +650,14 @@
               "Hover",
               "With note"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f484437e66f5"
         }
       ]
     },
     {
       "page": "06 · Filters & Selection",
+      "pageId": "843924a2-43b6-804b-8008-f47a49fa29af",
       "components": [
         {
           "name": "CollectionOption",
@@ -564,7 +666,8 @@
               "True",
               "False"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f48712a1cf5a"
         },
         {
           "name": "ContentFilter",
@@ -574,7 +677,8 @@
               "Active",
               "Open"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f4861d94d1f5"
         },
         {
           "name": "DurationOption",
@@ -588,10 +692,12 @@
               "False",
               "True"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f4865a9e42f6"
         },
         {
-          "name": "FilterBar"
+          "name": "FilterBar",
+          "boardId": "843924a2-43b6-804b-8008-f4866f2ac3c0"
         },
         {
           "name": "SelectableItem",
@@ -600,27 +706,34 @@
               "True",
               "False"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f486ad90c1fd"
         },
         {
-          "name": "SessionContentSelection"
+          "name": "SessionContentSelection",
+          "boardId": "843924a2-43b6-804b-8008-f486c04224ea"
         },
         {
-          "name": "SessionDurationSelector"
+          "name": "SessionDurationSelector",
+          "boardId": "843924a2-43b6-804b-8008-f4867dc40f24"
         }
       ]
     },
     {
       "page": "07 · Feedback & Overlays",
+      "pageId": "843924a2-43b6-804b-8008-f47a49fa94e0",
       "components": [
         {
-          "name": "BottomSheet"
+          "name": "BottomSheet",
+          "boardId": "843924a2-43b6-804b-8008-f489265c705c"
         },
         {
-          "name": "ConfirmationDialog"
+          "name": "ConfirmationDialog",
+          "boardId": "843924a2-43b6-804b-8008-f488ed564f06"
         },
         {
-          "name": "Drawer"
+          "name": "Drawer",
+          "boardId": "843924a2-43b6-804b-8008-f488fbe6c8b0"
         },
         {
           "name": "EmptyState",
@@ -630,22 +743,28 @@
               "No results",
               "Empty collection"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f488aed8b036"
         },
         {
-          "name": "ErrorMessage"
+          "name": "ErrorMessage",
+          "boardId": "843924a2-43b6-804b-8008-f4884b73fb6f"
         },
         {
-          "name": "LoadingState"
+          "name": "LoadingState",
+          "boardId": "843924a2-43b6-804b-8008-f4883757677c"
         },
         {
-          "name": "Modal"
+          "name": "Modal",
+          "boardId": "843924a2-43b6-804b-8008-f488bfc76cec"
         },
         {
-          "name": "Popover"
+          "name": "Popover",
+          "boardId": "843924a2-43b6-804b-8008-f487aa0286d7"
         },
         {
-          "name": "Skeleton"
+          "name": "Skeleton",
+          "boardId": "843924a2-43b6-804b-8008-f4884b28f56f"
         },
         {
           "name": "Toast",
@@ -655,51 +774,66 @@
               "Success",
               "Error"
             ]
-          }
+          },
+          "boardId": "843924a2-43b6-804b-8008-f4878884b6a7"
         },
         {
-          "name": "Tooltip"
+          "name": "Tooltip",
+          "boardId": "843924a2-43b6-804b-8008-f487a9bc9375"
         }
       ]
     },
     {
       "page": "08 · Layout Patterns",
+      "pageId": "843924a2-43b6-804b-8008-f47a49fb6641",
       "components": [
         {
-          "name": "CollectionGrid"
+          "name": "CollectionGrid",
+          "boardId": "843924a2-43b6-804b-8008-f48b0505a6b3"
         },
         {
-          "name": "ContentList"
+          "name": "ContentList",
+          "boardId": "843924a2-43b6-804b-8008-f48a0bdaba09"
         },
         {
-          "name": "DesktopAppShell"
+          "name": "DesktopAppShell",
+          "boardId": "843924a2-43b6-804b-8008-f48ac74c1f17"
         },
         {
-          "name": "FeaturedContentLayout"
+          "name": "FeaturedContentLayout",
+          "boardId": "843924a2-43b6-804b-8008-f48a47082549"
         },
         {
-          "name": "FocusLayout"
+          "name": "FocusLayout",
+          "boardId": "843924a2-43b6-804b-8008-f48b2a62c240"
         },
         {
-          "name": "MobileAppShell"
+          "name": "MobileAppShell",
+          "boardId": "843924a2-43b6-804b-8008-f48ae635aedc"
         },
         {
-          "name": "ReaderLayout"
+          "name": "ReaderLayout",
+          "boardId": "843924a2-43b6-804b-8008-f48b10a115c8"
         },
         {
-          "name": "SaveContentForm"
+          "name": "SaveContentForm",
+          "boardId": "843924a2-43b6-804b-8008-f48a2a66a046"
         },
         {
-          "name": "SessionCompletion"
+          "name": "SessionCompletion",
+          "boardId": "843924a2-43b6-804b-8008-f489d5dfc080"
         },
         {
-          "name": "SessionControls"
+          "name": "SessionControls",
+          "boardId": "843924a2-43b6-804b-8008-f489722874ee"
         },
         {
-          "name": "SessionProgress"
+          "name": "SessionProgress",
+          "boardId": "843924a2-43b6-804b-8008-f48971ceb1ee"
         },
         {
-          "name": "SessionTimer"
+          "name": "SessionTimer",
+          "boardId": "843924a2-43b6-804b-8008-f489719c6879"
         }
       ]
     }
