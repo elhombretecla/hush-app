@@ -15,7 +15,7 @@ export const VARIANT_NOTES: Record<string, string> = {
   ContentTypeBadge: "Code adds Type = Post for social posts captured from X, Bluesky, Mastodon or Reddit.",
   ReadingContentBlock: "Code adds Type = Image for figures inside captured articles.",
   TextHighlight: "Code adds the three HighlightActionBar colours (honey · moss · clay).",
-  ArticleCard: "Code shows a captured thumbnail when there is one; ContentCover is the fallback.",
+  ArticleCard: "The media slot is an ArticleMedia (Source: Cover · Image · Screenshot), in Penpot and in code.",
 };
 
 /** Variant values that exist only in code (shown as extra chips next to the Penpot ones). */
