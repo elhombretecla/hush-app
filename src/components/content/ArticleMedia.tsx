@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Article } from "../../data/types";
 import { ContentCover } from "./ContentCover";
+import "./content.css";
 
 /** Remote images go through the local /api/image cache so covers survive hotlink protection. */
 export const imageSrc = (src: string) => (src.startsWith("/api/") || src.startsWith("data:") ? src : `/api/image?src=${encodeURIComponent(src)}`);

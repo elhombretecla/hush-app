@@ -502,6 +502,17 @@
           "boardId": "843924a2-43b6-804b-8008-f4832e287b21"
         },
         {
+          "name": "ArticleMedia",
+          "variants": {
+            "Source": [
+              "Cover",
+              "Image",
+              "Screenshot"
+            ]
+          },
+          "boardId": "11d01286-56ea-80a8-8008-f4daa49cf029"
+        },
+        {
           "name": "AuthorMetadata",
           "boardId": "843924a2-43b6-804b-8008-f47f65f06c6c"
         },

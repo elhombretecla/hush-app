@@ -38,10 +38,9 @@ export const CompactByType: Story = {
   ),
 };
 
-/** Code-side: thumbnails captured from the source (metadata image · first image · screenshot). */
+/** With a thumbnail captured from the source — the card's media slot is an ArticleMedia. */
 export const WithCapturedImage: Story = {
-  name: "With captured thumbnail (code)",
-  parameters: { codeOnly: "ArticleMedia — real thumbnail with ContentCover fallback" },
+  name: "With captured thumbnail",
   args: { article: { ...sample.gardens, image: samplePhoto, imageFrom: "metadata" } },
   render: (args) => <div style={{ width: 360 }}><ArticleCard {...args} /></div>,
 };
