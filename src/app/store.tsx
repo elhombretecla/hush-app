@@ -12,6 +12,17 @@ interface State {
   highlights: Highlight[];
   prefs: Preferences;
   recentSearches: string[];
+  /** Ids removed by the reader (sample pieces can't be erased from the bundle, so they are hidden). */
+  deletedIds: string[];
+}
+
+/** Everything needed to undo a deletion. */
+export interface DeletedSnapshot {
+  article: Article;
+  wasSaved: boolean;
+  articleState?: ArticleState;
+  collectionIds: string[];
+  highlights: Highlight[];
 }
 
 type Action =
@@ -25,7 +36,9 @@ type Action =
   | { type: "removeHighlightGroup"; groupId: string }
   | { type: "setPrefs"; patch: Partial<Preferences> }
   | { type: "setReading"; patch: Partial<ReadingPrefs> }
-  | { type: "addSearch"; query: string };
+  | { type: "addSearch"; query: string }
+  | { type: "deleteArticle"; id: string }
+  | { type: "restoreArticle"; snapshot: DeletedSnapshot };
 
 const initialState = (): State => ({
   savedArticles: [],
@@ -34,6 +47,7 @@ const initialState = (): State => ({
   highlights: structuredClone(seedHighlights),
   prefs: structuredClone(defaultPreferences),
   recentSearches: [...seedRecentSearches],
+  deletedIds: [],
 });
 
 function load(): State {
@@ -102,6 +116,28 @@ function reducer(state: State, action: Action): State {
       return { ...state, prefs: { ...state.prefs, ...action.patch } };
     case "setReading":
       return { ...state, prefs: { ...state.prefs, reading: { ...state.prefs.reading, ...action.patch } } };
+    case "deleteArticle": {
+      const { [action.id]: _removed, ...articleState } = state.articleState;
+      return {
+        ...state,
+        savedArticles: state.savedArticles.filter((a) => a.id !== action.id),
+        deletedIds: state.savedArticles.some((a) => a.id === action.id) ? state.deletedIds : [...state.deletedIds, action.id],
+        articleState,
+        highlights: state.highlights.filter((h) => h.articleId !== action.id),
+        collections: state.collections.map((c) => (c.articleIds.includes(action.id) ? { ...c, articleIds: c.articleIds.filter((x) => x !== action.id) } : c)),
+      };
+    }
+    case "restoreArticle": {
+      const s = action.snapshot;
+      return {
+        ...state,
+        savedArticles: s.wasSaved ? [s.article, ...state.savedArticles] : state.savedArticles,
+        deletedIds: state.deletedIds.filter((x) => x !== s.article.id),
+        articleState: s.articleState ? { ...state.articleState, [s.article.id]: s.articleState } : state.articleState,
+        highlights: [...s.highlights, ...state.highlights],
+        collections: state.collections.map((c) => (s.collectionIds.includes(c.id) && !c.articleIds.includes(s.article.id) ? { ...c, articleIds: [s.article.id, ...c.articleIds] } : c)),
+      };
+    }
     case "addSearch": {
       const q = action.query.trim();
       if (!q) return state;
@@ -127,7 +163,7 @@ function useStoreValue() {
     document.documentElement.dataset.density = state.prefs.density;
   }, [state.prefs.theme, state.prefs.density]);
 
-  const allArticles = useMemo(() => [...state.savedArticles, ...seedArticles], [state.savedArticles]);
+  const allArticles = useMemo(() => [...state.savedArticles, ...seedArticles.filter((a) => !state.deletedIds.includes(a.id))], [state.savedArticles, state.deletedIds]);
   const getArticle = useCallback((id: string) => allArticles.find((a) => a.id === id), [allArticles]);
   const getState = useCallback(
     (id: string): ArticleState => state.articleState[id] ?? { status: "Unread", progress: 0, bookmarked: false, inInbox: false, archived: false },
@@ -144,6 +180,7 @@ function useStoreValue() {
       fileFromInbox: (id: string) => dispatch({ type: "patchArticle", id, patch: { inInbox: false } }),
       saveArticle: (article: Article, collectionId?: string) => dispatch({ type: "saveArticle", article, collectionId }),
       replaceArticle: (article: Article) => dispatch({ type: "replaceArticle", article }),
+      restoreArticle: (snapshot: DeletedSnapshot) => dispatch({ type: "restoreArticle", snapshot }),
       setCollectionMembership: (collectionId: string, articleId: string, member: boolean) => dispatch({ type: "setCollectionMembership", collectionId, articleId, member }),
       createCollection: (collection: Collection) => dispatch({ type: "createCollection", collection }),
       addHighlights: (highlights: Highlight[]) => dispatch({ type: "addHighlights", highlights }),
@@ -156,7 +193,25 @@ function useStoreValue() {
     [],
   );
 
-  return { state, allArticles, getArticle, getState, ...actions };
+  /** Removes a piece with its highlights and collection links; returns what is needed to undo. */
+  const deleteArticle = useCallback(
+    (id: string): DeletedSnapshot | null => {
+      const article = allArticles.find((a) => a.id === id);
+      if (!article) return null;
+      const snapshot: DeletedSnapshot = {
+        article,
+        wasSaved: state.savedArticles.some((a) => a.id === id),
+        articleState: state.articleState[id],
+        collectionIds: state.collections.filter((c) => c.articleIds.includes(id)).map((c) => c.id),
+        highlights: state.highlights.filter((h) => h.articleId === id),
+      };
+      dispatch({ type: "deleteArticle", id });
+      return snapshot;
+    },
+    [allArticles, state],
+  );
+
+  return { state, allArticles, getArticle, getState, deleteArticle, ...actions };
 }
 
 type Store = ReturnType<typeof useStoreValue>;

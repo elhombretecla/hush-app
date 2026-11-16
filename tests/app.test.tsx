@@ -96,3 +96,20 @@ describe("Save content", () => {
     vi.unstubAllGlobals();
   });
 });
+
+describe("Deleting a piece", () => {
+  it("removes it from the library with its highlights, and Undo brings it back", async () => {
+    renderAt("/read/gardens");
+    await userEvent.click(screen.getByRole("button", { name: "Delete from library" }));
+    expect(screen.getByRole("dialog", { name: "Delete from your library?" })).toHaveTextContent("1 highlight");
+    await userEvent.click(within(screen.getByRole("dialog")).getByRole("button", { name: "Delete" }));
+    expect((await screen.findAllByRole("heading", { name: "My Library" })).length).toBeGreaterThan(0);
+    expect(screen.queryByRole("heading", { name: "The Internet Should Have Gardens" })).not.toBeInTheDocument();
+    const stored = JSON.parse(localStorage.getItem("hush:v1")!);
+    expect(stored.deletedIds).toContain("gardens");
+    expect(stored.highlights.some((h: { articleId: string }) => h.articleId === "gardens")).toBe(false);
+    await userEvent.click(screen.getByRole("button", { name: "Undo" }));
+    expect(await screen.findByRole("heading", { name: "The Internet Should Have Gardens" })).toBeInTheDocument();
+    expect(JSON.parse(localStorage.getItem("hush:v1")!).highlights.some((h: { articleId: string }) => h.articleId === "gardens")).toBe(true);
+  });
+});

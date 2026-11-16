@@ -4,8 +4,8 @@ import { Icon } from "../brand/Icon";
 import { AuthorMetadata, TopicTag } from "../content/meta";
 import "./reading.css";
 
-/** Penpot ReaderFooter — source · topics · Mark as finished · Add to collection. */
-export function ReaderFooter({ article, finished, onFinish, onCollect }: { article: Article; finished: boolean; onFinish: () => void; onCollect: () => void }) {
+/** Penpot ReaderFooter — source · topics · Mark as finished · Add to collection · Delete. */
+export function ReaderFooter({ article, finished, onFinish, onCollect, onDelete }: { article: Article; finished: boolean; onFinish: () => void; onCollect: () => void; onDelete: () => void }) {
   return (
     <footer className="reader-footer">
       <div className="reader-footer__source">
@@ -33,6 +33,9 @@ export function ReaderFooter({ article, finished, onFinish, onCollect }: { artic
         </Button>
         <Button intent="secondary" size="lg" onClick={onCollect}>
           Add to collection
+        </Button>
+        <Button intent="ghost" size="lg" icon="trash" className="reader-footer__delete" onClick={onDelete}>
+          Delete from library
         </Button>
       </div>
     </footer>

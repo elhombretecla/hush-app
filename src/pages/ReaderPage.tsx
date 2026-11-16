@@ -39,6 +39,7 @@ export function ReaderPage() {
   const store = useStore();
   const { state, getArticle, getState, toggleBookmark, setProgress, markFinished, addHighlights, updateHighlight, removeHighlightGroup, replaceArticle } = store;
   const [refreshing, setRefreshing] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const article = getArticle(id);
   const articleState = getState(id);
   const compact = useIsCompact();
@@ -230,6 +231,19 @@ export function ReaderPage() {
     }
   };
 
+  const remove = () => {
+    const title = article.title;
+    const snapshot = store.deleteArticle(id);
+    setConfirmDelete(false);
+    navigate("/library", { replace: true });
+    if (snapshot)
+      toast({
+        tone: "neutral",
+        message: `Deleted “${title.length > 40 ? title.slice(0, 38) + "…" : title}”`,
+        action: { label: "Undo", onClick: () => store.restoreArticle(snapshot) },
+      });
+  };
+
   const finish = () => {
     markFinished(id);
     setLiveProgress(1);
@@ -349,7 +363,7 @@ export function ReaderPage() {
             </div>
           )}
 
-          <ReaderFooter article={article} finished={finished} onFinish={finish} onCollect={() => setCollectOpen(true)} />
+          <ReaderFooter article={article} finished={finished} onFinish={finish} onCollect={() => setCollectOpen(true)} onDelete={() => setConfirmDelete(true)} />
         </article>
 
         <aside className={`reader__aside reader__aside--right ${annotation ? "is-hidden" : ""}`} aria-label="Reading tools">
@@ -439,6 +453,29 @@ export function ReaderPage() {
             ))}
           </ul>
         )}
+      </Modal>
+
+      {/* Penpot ConfirmationDialog — destructive, specific, reversible through the toast */}
+      <Modal
+        open={confirmDelete}
+        onClose={() => setConfirmDelete(false)}
+        title="Delete from your library?"
+        width={440}
+        footer={
+          <>
+            <Button intent="secondary" onClick={() => setConfirmDelete(false)}>
+              Keep it
+            </Button>
+            <Button intent="destructive" onClick={remove}>
+              Delete
+            </Button>
+          </>
+        }
+      >
+        <p className="type-body-md muted-2">
+          “{article.title}” will be removed from your library and collections
+          {groups.length ? `, together with its ${groups.length} ${groups.length === 1 ? "highlight" : "highlights"}` : ""}. You can undo this for a few seconds.
+        </p>
       </Modal>
 
       <AddToCollectionDialog open={collectOpen} articleIds={[id]} onClose={() => setCollectOpen(false)} />
