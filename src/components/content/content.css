@@ -183,9 +183,9 @@ button.topic-tag:hover { border-color: var(--color-border-strong); color: var(--
 .collection-card:hover .collection-card__footer svg { color: var(--color-icon-accent); transform: translateX(2px); }
 .collection-card__stack { position: relative; height: 168px; background: var(--color-bg-muted); overflow: hidden; }
 .collection-card__cover { position: absolute; width: 150px; height: 188px; border-radius: 6px; }
-.collection-card__cover--1 { left: 12%; top: 28px; }
-.collection-card__cover--2 { left: calc(12% + 70px); top: 36px; }
-.collection-card__cover--3 { left: calc(12% + 140px); top: 44px; }
+.collection-card__cover--1 { left: calc(50% - 145px); top: 28px; }
+.collection-card__cover--2 { left: calc(50% - 75px); top: 36px; }
+.collection-card__cover--3 { left: calc(50% - 5px); top: 44px; }
 .collection-card__body { display: flex; flex-direction: column; gap: var(--space-8); padding: var(--space-20); }
 .collection-card__desc { color: var(--color-text-secondary); }
 .collection-card__footer { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; color: var(--color-icon-secondary); }
@@ -274,3 +274,10 @@ button.topic-tag:hover { border-color: var(--color-border-strong); color: var(--
   .list-item__duration { display: none; }
   .list-item__actions { opacity: 1; }
 }
+
+/* Wide screens: keep reading measure and cover proportions in check when cards get wider than the 1440 design. */
+.article-card--standard .article-card__media { max-height: 240px; }
+.article-card--featured .article-card__media { max-width: 560px; }
+.article-card--featured .article-card__title,
+.article-card--featured .article-card__excerpt { max-width: 640px; }
+.collection-card__stack { background: var(--color-bg-muted); }

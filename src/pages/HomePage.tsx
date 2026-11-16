@@ -119,7 +119,7 @@ export function HomePage() {
             All collections
           </TextLink>
         </div>
-        <div className="card-grid card-grid--3">
+        <div className="card-grid card-grid--fit">
           {state.collections.slice(0, 3).map((c) => (
             <CollectionCard key={c.id} collection={c} progressLabel={collectionProgress(c, getArticle, getState)} />
           ))}

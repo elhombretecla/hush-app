@@ -1,13 +1,23 @@
 .app-shell { display: flex; min-height: 100vh; }
 .app-shell__main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 
+/*
+ * Wide screens: the Penpot frames are 1440px (content ≈ size.layout.content-max).
+ * Above that the layout stays fluid up to 1.5 × content-max, centred, with gutters
+ * that grow with the viewport. Grids add columns instead of stretching cards.
+ */
+.app-shell__main {
+  --page-max: calc(var(--size-layout-content-max) * 1.5);
+  --page-gutter: clamp(var(--space-32), 3.2vw, var(--space-80));
+}
 .page {
   display: flex;
   flex-direction: column;
   gap: var(--density-section-gap);
   width: 100%;
-  max-width: calc(var(--size-layout-content-max) + 2 * 44px);
-  padding: var(--space-48) 44px var(--space-80);
+  max-width: calc(var(--page-max) + 2 * var(--page-gutter));
+  margin-inline: auto;
+  padding: var(--space-48) var(--page-gutter) var(--space-80);
   outline: none;
 }
 .page:focus-visible { outline: none; }
@@ -44,7 +54,7 @@
 .page-title-row { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-24); flex-wrap: wrap; }
 .page-titles { display: flex; flex-direction: column; gap: var(--space-8); max-width: 680px; }
 .page-titles .lede { color: var(--color-text-secondary); }
-.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--space-24); align-items: start; }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: var(--space-24); align-items: start; }
 .stack { display: flex; flex-direction: column; gap: var(--density-list-gap); }
 
 @media (max-width: 1023px) {

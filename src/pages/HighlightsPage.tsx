@@ -51,7 +51,6 @@ export function HighlightsPage() {
   const resurfaced = groups.length ? groups[(groups.length - 1 + shuffle) % groups.length] : null;
   const active = groups.find((g) => g[0].groupId === selected);
   const articleCount = new Set(state.highlights.map((h) => h.articleId)).size;
-  const columns = compact ? [filtered] : [filtered.filter((_, i) => i % 2 === 0), filtered.filter((_, i) => i % 2 === 1)];
 
   const card = (g: Highlight[]) => {
     const h = g[0];
@@ -131,13 +130,7 @@ export function HighlightsPage() {
       {filtered.length === 0 ? (
         <EmptyState kind="no-results" title="No highlights match" description="Select any passage while reading to keep it here." />
       ) : (
-        <div className="highlight-columns">
-          {columns.map((col, i) => (
-            <div key={i} className="highlight-column">
-              {col.map(card)}
-            </div>
-          ))}
-        </div>
+        <div className="highlight-columns">{filtered.map(card)}</div>
       )}
 
       <Modal open={!!active} onClose={() => setSelected(null)} title="Highlight" placement="end" width={440}>
