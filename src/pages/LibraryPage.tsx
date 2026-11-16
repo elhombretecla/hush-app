@@ -7,6 +7,7 @@ import { SegmentedControl } from "../components/actions/SegmentedControl";
 import { TextButton } from "../components/actions/TextLink";
 import { ArticleCard } from "../components/content/ArticleCard";
 import { ContentFilter } from "../components/content/ContentFilter";
+import { FilterBar } from "../components/content/FilterBar";
 import { TopicTag } from "../components/content/meta";
 import { EmptyState } from "../components/feedback/EmptyState";
 import { SearchInput } from "../components/forms/SearchInput";
@@ -80,22 +81,26 @@ export function LibraryPage() {
         <SearchInput className="library__search" value={query} onChange={setQuery} label="Search your library" placeholder={`Search ${library.length} pieces`} shortcut={compact ? undefined : "⌘K"} />
       </div>
 
-      <div className="filter-bar" role="group" aria-label="Filters">
-        <div className="filter-bar__filters">
-          <ContentFilter label="Type" options={TYPES} value={type} onChange={setType} />
-          <ContentFilter label="Status" options={STATUSES} value={status} onChange={setStatus} />
-          <ContentFilter label="Saved" options={SAVED} value={saved} onChange={setSaved} />
-          {filtered && (
-            <TextButton tone="muted" onClick={clear}>
-              Clear
-            </TextButton>
-          )}
-        </div>
-        <div className="filter-bar__view">
-          <ContentFilter label="Sort" options={SORTS} value={sort} onChange={setSort} />
-          {!compact && <SegmentedControl label="View" options={["List", "Grid"] as const} value={view} onChange={setView} />}
-        </div>
-      </div>
+      <FilterBar
+        filters={
+          <>
+            <ContentFilter label="Type" options={TYPES} value={type} onChange={setType} />
+            <ContentFilter label="Status" options={STATUSES} value={status} onChange={setStatus} />
+            <ContentFilter label="Saved" options={SAVED} value={saved} onChange={setSaved} />
+            {filtered && (
+              <TextButton tone="muted" onClick={clear}>
+                Clear
+              </TextButton>
+            )}
+          </>
+        }
+        view={
+          <>
+            <ContentFilter label="Sort" options={SORTS} value={sort} onChange={setSort} />
+            {!compact && <SegmentedControl label="View" options={["List", "Grid"] as const} value={view} onChange={setView} />}
+          </>
+        }
+      />
 
       <div className="topic-row" role="group" aria-label="Topics">
         {topics.map((t) => (

@@ -29,6 +29,17 @@ npm run build      # regenerates tokens, type-checks, builds to dist/
 npm test           # unit and interaction tests (Vitest)
 ```
 
+## Storybook (optional)
+
+```bash
+npm run storybook        # http://localhost:6006
+npm run build-storybook  # static catalogue in storybook-static/
+```
+
+A catalogue of the components the app uses, organised like the Penpot library (*HUSH / UI Kit & Components*, pages 01–08) with Penpot's variant names. The toolbar switches Paper / Night / Sepia and Comfortable / Compact; hover, pressed and focus states are forced with `storybook-addon-pseudo-states`. Layout patterns render the real routes.
+
+**Penpot sync** (first page in the sidebar) matches every Penpot component to its stories, using `src/stories/penpot-components.json`. To refresh it, run `scripts/penpot-export-components.js` through the Penpot MCP `execute_code` tool with the UI Kit open (read-only) and save the JSON there. `npm test` fails if a Penpot component has neither a story nor a documented reason in `src/stories/sync.ts`.
+
 ## Refreshing the Penpot token snapshot
 
 Tokens flow one way: **Penpot Foundations → JSON snapshot → `npm run tokens` → CSS custom properties**.

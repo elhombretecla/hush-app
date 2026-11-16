@@ -1,0 +1,713 @@
+{
+  "file": "HUSH / UI Kit & Components",
+  "pages": [
+    {
+      "page": "01 · Buttons & Actions",
+      "components": [
+        {
+          "name": "BookmarkButton",
+          "variants": {
+            "State": [
+              "Unsaved",
+              "Saved",
+              "Hover",
+              "Disabled"
+            ]
+          }
+        },
+        {
+          "name": "Button",
+          "variants": {
+            "Intent": [
+              "Primary",
+              "Secondary",
+              "Ghost",
+              "Destructive"
+            ],
+            "Size": [
+              "Small",
+              "Medium",
+              "Large"
+            ],
+            "State": [
+              "Default",
+              "Hover",
+              "Pressed",
+              "Focus",
+              "Disabled"
+            ]
+          }
+        },
+        {
+          "name": "Icon / archive"
+        },
+        {
+          "name": "Icon / arrow-left"
+        },
+        {
+          "name": "Icon / arrow-right"
+        },
+        {
+          "name": "Icon / article"
+        },
+        {
+          "name": "Icon / audio"
+        },
+        {
+          "name": "Icon / bookmark"
+        },
+        {
+          "name": "Icon / bookmark-filled"
+        },
+        {
+          "name": "Icon / check"
+        },
+        {
+          "name": "Icon / chevron-down"
+        },
+        {
+          "name": "Icon / chevron-left"
+        },
+        {
+          "name": "Icon / chevron-right"
+        },
+        {
+          "name": "Icon / clock"
+        },
+        {
+          "name": "Icon / close"
+        },
+        {
+          "name": "Icon / collection"
+        },
+        {
+          "name": "Icon / external"
+        },
+        {
+          "name": "Icon / filter"
+        },
+        {
+          "name": "Icon / focus"
+        },
+        {
+          "name": "Icon / grid"
+        },
+        {
+          "name": "Icon / highlight"
+        },
+        {
+          "name": "Icon / home"
+        },
+        {
+          "name": "Icon / inbox"
+        },
+        {
+          "name": "Icon / library"
+        },
+        {
+          "name": "Icon / link"
+        },
+        {
+          "name": "Icon / list"
+        },
+        {
+          "name": "Icon / minus"
+        },
+        {
+          "name": "Icon / moon"
+        },
+        {
+          "name": "Icon / more"
+        },
+        {
+          "name": "Icon / newsletter"
+        },
+        {
+          "name": "Icon / note"
+        },
+        {
+          "name": "Icon / pause"
+        },
+        {
+          "name": "Icon / play"
+        },
+        {
+          "name": "Icon / plus"
+        },
+        {
+          "name": "Icon / quote"
+        },
+        {
+          "name": "Icon / search"
+        },
+        {
+          "name": "Icon / settings"
+        },
+        {
+          "name": "Icon / share"
+        },
+        {
+          "name": "Icon / sun"
+        },
+        {
+          "name": "Icon / tag"
+        },
+        {
+          "name": "Icon / trash"
+        },
+        {
+          "name": "Icon / type"
+        },
+        {
+          "name": "Icon / user"
+        },
+        {
+          "name": "Icon / video"
+        },
+        {
+          "name": "IconButton",
+          "variants": {
+            "Style": [
+              "Ghost",
+              "Outline",
+              "Filled"
+            ],
+            "State": [
+              "Default",
+              "Hover",
+              "Disabled"
+            ]
+          }
+        },
+        {
+          "name": "Segment",
+          "variants": {
+            "Selected": [
+              "True",
+              "False"
+            ]
+          }
+        },
+        {
+          "name": "SegmentedControl",
+          "variants": {
+            "Options": [
+              "3",
+              "2"
+            ]
+          }
+        },
+        {
+          "name": "TextLink",
+          "variants": {
+            "State": [
+              "Default",
+              "Hover",
+              "Muted"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "page": "02 · Navigation",
+      "components": [
+        {
+          "name": "AppHeader"
+        },
+        {
+          "name": "BackButton"
+        },
+        {
+          "name": "Breadcrumb"
+        },
+        {
+          "name": "DesktopSidebar"
+        },
+        {
+          "name": "MobileBottomNavigation"
+        },
+        {
+          "name": "MobileTabItem",
+          "variants": {
+            "State": [
+              "Active",
+              "Inactive"
+            ]
+          }
+        },
+        {
+          "name": "MobileTopBar",
+          "variants": {
+            "Type": [
+              "Brand",
+              "Title",
+              "Reader"
+            ]
+          }
+        },
+        {
+          "name": "ProfileMenu"
+        },
+        {
+          "name": "SidebarNavItem",
+          "variants": {
+            "State": [
+              "Default",
+              "Hover",
+              "Active"
+            ]
+          }
+        },
+        {
+          "name": "StatusBar"
+        },
+        {
+          "name": "Tab",
+          "variants": {
+            "State": [
+              "Active",
+              "Inactive"
+            ]
+          }
+        },
+        {
+          "name": "Tabs"
+        },
+        {
+          "name": "ThemeOption",
+          "variants": {
+            "Theme": [
+              "Paper",
+              "Night",
+              "Sepia"
+            ],
+            "Selected": [
+              "True",
+              "False"
+            ]
+          }
+        },
+        {
+          "name": "ThemeSwitcher"
+        }
+      ]
+    },
+    {
+      "page": "03 · Inputs & Forms",
+      "components": [
+        {
+          "name": "Checkbox",
+          "variants": {
+            "Checked": [
+              "True",
+              "False"
+            ],
+            "State": [
+              "Default",
+              "Disabled"
+            ]
+          }
+        },
+        {
+          "name": "FormError"
+        },
+        {
+          "name": "FormField",
+          "variants": {
+            "State": [
+              "Default",
+              "Error"
+            ]
+          }
+        },
+        {
+          "name": "Radio",
+          "variants": {
+            "Selected": [
+              "True",
+              "False"
+            ]
+          }
+        },
+        {
+          "name": "SearchInput",
+          "variants": {
+            "State": [
+              "Default",
+              "Focus",
+              "Filled"
+            ]
+          }
+        },
+        {
+          "name": "Select",
+          "variants": {
+            "State": [
+              "Default",
+              "Open"
+            ]
+          }
+        },
+        {
+          "name": "TextArea",
+          "variants": {
+            "State": [
+              "Default",
+              "Focus"
+            ]
+          }
+        },
+        {
+          "name": "TextInput",
+          "variants": {
+            "State": [
+              "Default",
+              "Focus",
+              "Filled",
+              "Error",
+              "Disabled"
+            ]
+          }
+        },
+        {
+          "name": "Toggle",
+          "variants": {
+            "On": [
+              "True",
+              "False"
+            ],
+            "State": [
+              "Default",
+              "Disabled"
+            ]
+          }
+        },
+        {
+          "name": "URLInput",
+          "variants": {
+            "State": [
+              "Default",
+              "Focus",
+              "Loading",
+              "Valid",
+              "Error"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "page": "04 · Content Cards",
+      "components": [
+        {
+          "name": "ArticleCard",
+          "variants": {
+            "Layout": [
+              "Featured",
+              "Standard",
+              "Compact"
+            ],
+            "Type": [
+              "Article",
+              "Newsletter",
+              "Video",
+              "Audio"
+            ],
+            "Status": [
+              "Unread",
+              "In progress",
+              "Completed"
+            ]
+          }
+        },
+        {
+          "name": "AuthorMetadata"
+        },
+        {
+          "name": "CollectionCard",
+          "variants": {
+            "State": [
+              "Default",
+              "Hover"
+            ]
+          }
+        },
+        {
+          "name": "ContentCover",
+          "variants": {
+            "Tone": [
+              "Moss",
+              "Clay",
+              "Honey",
+              "Ink",
+              "Paper"
+            ]
+          }
+        },
+        {
+          "name": "ContentListItem",
+          "variants": {
+            "State": [
+              "Default",
+              "Hover",
+              "Selected"
+            ]
+          }
+        },
+        {
+          "name": "ContentTypeBadge",
+          "variants": {
+            "Type": [
+              "Article",
+              "Newsletter",
+              "Video",
+              "Audio"
+            ]
+          }
+        },
+        {
+          "name": "DurationIndicator"
+        },
+        {
+          "name": "ReadingStatus",
+          "variants": {
+            "Status": [
+              "Unread",
+              "In progress",
+              "Completed"
+            ]
+          }
+        },
+        {
+          "name": "TopicTag",
+          "variants": {
+            "State": [
+              "Default",
+              "Selected"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "page": "05 · Reading Components",
+      "components": [
+        {
+          "name": "Annotation"
+        },
+        {
+          "name": "HighlightActionBar"
+        },
+        {
+          "name": "PullQuote"
+        },
+        {
+          "name": "ReaderFooter"
+        },
+        {
+          "name": "ReaderHeader"
+        },
+        {
+          "name": "ReadingCompletion"
+        },
+        {
+          "name": "ReadingContentBlock",
+          "variants": {
+            "Type": [
+              "Lead",
+              "Paragraph",
+              "Subheading",
+              "Section break"
+            ]
+          }
+        },
+        {
+          "name": "ReadingPreferences"
+        },
+        {
+          "name": "ReadingProgress",
+          "variants": {
+            "Value": [
+              "0",
+              "38",
+              "62",
+              "100"
+            ]
+          }
+        },
+        {
+          "name": "ReadingToolbar"
+        },
+        {
+          "name": "TableOfContents"
+        },
+        {
+          "name": "TextHighlight",
+          "variants": {
+            "State": [
+              "Default",
+              "Hover",
+              "With note"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "page": "06 · Filters & Selection",
+      "components": [
+        {
+          "name": "CollectionOption",
+          "variants": {
+            "Selected": [
+              "True",
+              "False"
+            ]
+          }
+        },
+        {
+          "name": "ContentFilter",
+          "variants": {
+            "State": [
+              "Default",
+              "Active",
+              "Open"
+            ]
+          }
+        },
+        {
+          "name": "DurationOption",
+          "variants": {
+            "Minutes": [
+              "10",
+              "20",
+              "30"
+            ],
+            "Selected": [
+              "False",
+              "True"
+            ]
+          }
+        },
+        {
+          "name": "FilterBar"
+        },
+        {
+          "name": "SelectableItem",
+          "variants": {
+            "Selected": [
+              "True",
+              "False"
+            ]
+          }
+        },
+        {
+          "name": "SessionContentSelection"
+        },
+        {
+          "name": "SessionDurationSelector"
+        }
+      ]
+    },
+    {
+      "page": "07 · Feedback & Overlays",
+      "components": [
+        {
+          "name": "BottomSheet"
+        },
+        {
+          "name": "ConfirmationDialog"
+        },
+        {
+          "name": "Drawer"
+        },
+        {
+          "name": "EmptyState",
+          "variants": {
+            "Kind": [
+              "Inbox zero",
+              "No results",
+              "Empty collection"
+            ]
+          }
+        },
+        {
+          "name": "ErrorMessage"
+        },
+        {
+          "name": "LoadingState"
+        },
+        {
+          "name": "Modal"
+        },
+        {
+          "name": "Popover"
+        },
+        {
+          "name": "Skeleton"
+        },
+        {
+          "name": "Toast",
+          "variants": {
+            "Tone": [
+              "Neutral",
+              "Success",
+              "Error"
+            ]
+          }
+        },
+        {
+          "name": "Tooltip"
+        }
+      ]
+    },
+    {
+      "page": "08 · Layout Patterns",
+      "components": [
+        {
+          "name": "CollectionGrid"
+        },
+        {
+          "name": "ContentList"
+        },
+        {
+          "name": "DesktopAppShell"
+        },
+        {
+          "name": "FeaturedContentLayout"
+        },
+        {
+          "name": "FocusLayout"
+        },
+        {
+          "name": "MobileAppShell"
+        },
+        {
+          "name": "ReaderLayout"
+        },
+        {
+          "name": "SaveContentForm"
+        },
+        {
+          "name": "SessionCompletion"
+        },
+        {
+          "name": "SessionControls"
+        },
+        {
+          "name": "SessionProgress"
+        },
+        {
+          "name": "SessionTimer"
+        }
+      ]
+    }
+  ],
+  "brand": [
+    "Brand / App Icon",
+    "Brand / Wordmark / Compact",
+    "Brand / Wordmark / Primary",
+    "Brand / Wordmark / Reversed"
+  ]
+}

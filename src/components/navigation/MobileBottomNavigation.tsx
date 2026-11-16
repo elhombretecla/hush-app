@@ -11,14 +11,21 @@ const TABS: { to: string; icon: IconName; label: string; end?: boolean }[] = [
   { to: "/focus", icon: "focus", label: "Focus" },
 ];
 
+/** Penpot MobileTabItem — State: Active · Inactive (from the current route). */
+export function MobileTabItem({ to, icon, label, end }: { to: string; icon: IconName; label: string; end?: boolean }) {
+  return (
+    <NavLink to={to} end={end} className={({ isActive }) => `mobile-tab ${isActive ? "is-active" : ""}`}>
+      <Icon name={icon} />
+      <span>{label}</span>
+    </NavLink>
+  );
+}
+
 export function MobileBottomNavigation() {
   return (
     <nav className="mobile-bottom-nav" aria-label="Primary">
       {TABS.map((t) => (
-        <NavLink key={t.to} to={t.to} end={t.end} className={({ isActive }) => `mobile-tab ${isActive ? "is-active" : ""}`}>
-          <Icon name={t.icon} />
-          <span>{t.label}</span>
-        </NavLink>
+        <MobileTabItem key={t.to} {...t} />
       ))}
     </nav>
   );

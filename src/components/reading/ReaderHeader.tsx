@@ -1,7 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import { BookmarkButton } from "../actions/BookmarkButton";
 import { IconButton } from "../actions/IconButton";
-import { Icon } from "../brand/Icon";
+import { BackButton } from "../navigation/BackButton";
 import { ReadingProgress } from "./ReadingProgress";
 import "./reading.css";
 
@@ -22,14 +21,10 @@ interface ReaderHeaderProps {
 }
 
 export function ReaderHeader({ publication, title, progress, timeLeft, bookmarked, prefsOpen, onBookmark, onPreferences, onHighlights, onCollect, backTo, backLabel }: ReaderHeaderProps) {
-  const navigate = useNavigate();
   return (
     <header className="reader-header">
       <div className="reader-header__bar">
-        <button type="button" className="back-button" onClick={() => navigate(backTo)}>
-          <Icon name="chevron-left" />
-          <span>{backLabel}</span>
-        </button>
+        <BackButton to={backTo} label={backLabel} />
         <div className="reader-header__context" aria-hidden="true">
           <span className="overline">{publication}</span>
           <span className="type-label-sm reader-header__title">{title}</span>

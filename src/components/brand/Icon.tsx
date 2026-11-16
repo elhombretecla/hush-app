@@ -50,6 +50,8 @@ const FILLED: Record<string, string> = {
 };
 
 export type IconName = keyof typeof STROKE | keyof typeof FILLED;
+/** Every icon in the set — mirrors the Penpot "Icon / *" components. */
+export const ICON_NAMES = [...Object.keys(STROKE), ...Object.keys(FILLED)].sort() as IconName[];
 
 interface IconProps {
   name: IconName;

@@ -4,7 +4,6 @@
 .save__sample:hover { text-decoration: underline; text-underline-offset: 3px; }
 .save__tip { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: var(--radius-md); background: var(--color-bg-muted); color: var(--color-text-secondary); font-size: var(--type-caption-font-size); }
 .save__tip svg { color: var(--color-icon-secondary); flex: none; }
-.save__loading { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: var(--border-width-hairline) solid var(--color-border-subtle); border-radius: var(--radius-lg); background: var(--color-bg-surface); }
 .save__row { display: grid; grid-template-columns: 1fr 120px; gap: var(--space-12); }
 .save__hint { margin-right: auto; }
 @media (max-width: 640px) { .save__hint { display: none; } }

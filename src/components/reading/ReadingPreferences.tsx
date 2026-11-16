@@ -6,7 +6,7 @@ import { ThemeSwitcher } from "../navigation/ThemeSwitcher";
 import "./reading.css";
 
 /** Penpot ReadingPreferences — Appearance · Typeface · Text size · Line spacing · Width. Changes apply live. */
-export function ReadingPreferencesPanel({ onClose, showWidth = true, embedded = false }: { onClose?: () => void; showWidth?: boolean; embedded?: boolean }) {
+export function ReadingPreferences({ onClose, showWidth = true, embedded = false }: { onClose?: () => void; showWidth?: boolean; embedded?: boolean }) {
   const { state, setReading } = useStore();
   const r = state.prefs.reading;
   return (

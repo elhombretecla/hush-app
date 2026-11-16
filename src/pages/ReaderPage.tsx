@@ -9,6 +9,9 @@ import { ArticleMedia } from "../components/content/ArticleMedia";
 import { AuthorMetadata, DurationIndicator, durationLabel } from "../components/content/meta";
 import { EmptyState } from "../components/feedback/EmptyState";
 import { Modal } from "../components/feedback/Modal";
+import { Popover } from "../components/feedback/Popover";
+import { ConfirmationDialog } from "../components/feedback/ConfirmationDialog";
+import { Drawer } from "../components/feedback/Drawer";
 import { useToast } from "../components/feedback/Toast";
 import { MobileTopBar } from "../components/navigation/MobileTopBar";
 import { Annotation } from "../components/reading/Annotation";
@@ -17,7 +20,7 @@ import { ReaderFooter } from "../components/reading/ReaderFooter";
 import { ReaderHeader } from "../components/reading/ReaderHeader";
 import { ReadingCompletion } from "../components/reading/ReadingCompletion";
 import { ReadingContentBlock } from "../components/reading/ReadingContentBlock";
-import { ReadingPreferencesPanel } from "../components/reading/ReadingPreferences";
+import { ReadingPreferences } from "../components/reading/ReadingPreferences";
 import { ReadingProgress } from "../components/reading/ReadingProgress";
 import { ReadingToolbar } from "../components/reading/ReadingToolbar";
 import { TableOfContents } from "../components/reading/TableOfContents";
@@ -409,13 +412,13 @@ export function ReaderPage() {
       )}
 
       {!compact && prefsOpen && (
-        <div className="reading-prefs--popover" role="dialog" aria-label="Reading preferences">
-          <ReadingPreferencesPanel onClose={() => setPrefsOpen(false)} />
-        </div>
+        <Popover label="Reading preferences" className="reading-prefs--popover">
+          <ReadingPreferences onClose={() => setPrefsOpen(false)} />
+        </Popover>
       )}
       {compact && (
         <Modal open={prefsOpen} onClose={() => setPrefsOpen(false)} title="Reading preferences">
-          <ReadingPreferencesPanel embedded showWidth={false} />
+          <ReadingPreferences embedded showWidth={false} />
         </Modal>
       )}
 
@@ -426,7 +429,7 @@ export function ReaderPage() {
         </Modal>
       )}
 
-      <Modal open={drawerOpen} onClose={() => setDrawerOpen(false)} title={`Highlights · ${groups.length}`} subtitle={article.title} placement="end" width={400}>
+      <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} title={`Highlights · ${groups.length}`} subtitle={article.title} width={400}>
         {groups.length === 0 ? (
           <p className="type-body-md muted">Select any passage to highlight it. Your highlights and notes will gather here.</p>
         ) : (
@@ -453,30 +456,14 @@ export function ReaderPage() {
             ))}
           </ul>
         )}
-      </Modal>
+      </Drawer>
 
-      {/* Penpot ConfirmationDialog — destructive, specific, reversible through the toast */}
-      <Modal
-        open={confirmDelete}
-        onClose={() => setConfirmDelete(false)}
-        title="Delete from your library?"
-        width={440}
-        footer={
-          <>
-            <Button intent="secondary" onClick={() => setConfirmDelete(false)}>
-              Keep it
-            </Button>
-            <Button intent="destructive" onClick={remove}>
-              Delete
-            </Button>
-          </>
-        }
-      >
-        <p className="type-body-md muted-2">
+      <ConfirmationDialog open={confirmDelete} title="Delete from your library?" confirmLabel="Delete" cancelLabel="Keep it" onConfirm={remove} onCancel={() => setConfirmDelete(false)}>
+        <p>
           “{article.title}” will be removed from your library and collections
           {groups.length ? `, together with its ${groups.length} ${groups.length === 1 ? "highlight" : "highlights"}` : ""}. You can undo this for a few seconds.
         </p>
-      </Modal>
+      </ConfirmationDialog>
 
       <AddToCollectionDialog open={collectOpen} articleIds={[id]} onClose={() => setCollectOpen(false)} />
 

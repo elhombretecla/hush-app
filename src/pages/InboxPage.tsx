@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Page } from "../app/Page";
 import { useStore } from "../app/store";
-import { Button, ButtonLink } from "../components/actions/Button";
+import { ButtonLink } from "../components/actions/Button";
 import { SegmentedControl } from "../components/actions/SegmentedControl";
 import { Icon } from "../components/brand/Icon";
 import { ContentListItem } from "../components/content/ContentListItem";
 import { EmptyState } from "../components/feedback/EmptyState";
-import { Modal } from "../components/feedback/Modal";
+import { ConfirmationDialog } from "../components/feedback/ConfirmationDialog";
 import { useToast } from "../components/feedback/Toast";
 import { MobileTopBar } from "../components/navigation/MobileTopBar";
 import { AddToCollectionDialog } from "../features/collections/AddToCollectionDialog";
@@ -126,28 +126,19 @@ export function InboxPage() {
         </div>
       )}
 
-      {/* Penpot ConfirmationDialog */}
-      <Modal
+      <ConfirmationDialog
         open={!!confirmDelete}
-        onClose={() => setConfirmDelete(null)}
         title={deleteCount === 1 ? "Delete from your library?" : `Delete ${deleteCount} pieces?`}
-        width={440}
-        footer={
-          <>
-            <Button intent="secondary" onClick={() => setConfirmDelete(null)}>
-              Keep {deleteCount === 1 ? "it" : "them"}
-            </Button>
-            <Button intent="destructive" onClick={() => confirmDelete && deleteIds(confirmDelete)}>
-              Delete{deleteCount > 1 ? ` ${deleteCount}` : ""}
-            </Button>
-          </>
-        }
+        confirmLabel={`Delete${deleteCount > 1 ? ` ${deleteCount}` : ""}`}
+        cancelLabel={`Keep ${deleteCount === 1 ? "it" : "them"}`}
+        onConfirm={() => confirmDelete && deleteIds(confirmDelete)}
+        onCancel={() => setConfirmDelete(null)}
       >
-        <p className="type-body-md muted-2">
+        <p>
           {deleteCount === 1 ? `“${getArticle(confirmDelete![0])?.title}” will` : `These ${deleteCount} pieces will`} be removed from your library and collections
           {highlightCount ? `, together with ${highlightCount} ${highlightCount === 1 ? "highlight" : "highlights"}` : ""}. You can undo this for a few seconds.
         </p>
-      </Modal>
+      </ConfirmationDialog>
 
       <AddToCollectionDialog
         open={!!collectFor}

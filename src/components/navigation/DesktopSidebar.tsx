@@ -7,8 +7,24 @@ import { Wordmark } from "../brand/Wordmark";
 import { SidebarNavItem } from "./SidebarNavItem";
 import "./navigation.css";
 
+/** Penpot ProfileMenu — avatar · name · current theme and density · link to Preferences. */
+export function ProfileMenu({ name, initials, detail }: { name: string; initials: string; detail: string }) {
+  return (
+    <Link to="/preferences" className="app-sidebar__profile">
+      <span className="avatar" aria-hidden="true">
+        {initials}
+      </span>
+      <span className="app-sidebar__profile-text">
+        <span className="type-label-sm">{name}</span>
+        <span className="type-caption muted">{detail}</span>
+      </span>
+      <Icon name="settings" label="Preferences" />
+    </Link>
+  );
+}
+
 /** Penpot DesktopSidebar (248px). */
-export function AppSidebar({ onSave }: { onSave: () => void }) {
+export function DesktopSidebar({ onSave }: { onSave: () => void }) {
   const { state, allArticles } = useStore();
   const inboxCount = allArticles.filter((a) => state.articleState[a.id]?.inInbox).length;
   const libraryCount = allArticles.filter((a) => !state.articleState[a.id]?.archived).length;
@@ -40,18 +56,7 @@ export function AppSidebar({ onSave }: { onSave: () => void }) {
       <Button intent="primary" icon="plus" fullWidth onClick={onSave}>
         Save something
       </Button>
-      <Link to="/preferences" className="app-sidebar__profile">
-        <span className="avatar" aria-hidden="true">
-          {userProfile.initials}
-        </span>
-        <span className="app-sidebar__profile-text">
-          <span className="type-label-sm">{userProfile.name}</span>
-          <span className="type-caption muted">
-            {themeName} · {state.prefs.density === "compact" ? "Compact" : "Comfortable"}
-          </span>
-        </span>
-        <Icon name="settings" label="Preferences" />
-      </Link>
+      <ProfileMenu name={userProfile.name} initials={userProfile.initials} detail={`${themeName} · ${state.prefs.density === "compact" ? "Compact" : "Comfortable"}`} />
     </aside>
   );
 }

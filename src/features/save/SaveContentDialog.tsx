@@ -9,7 +9,8 @@ import { TopicTag } from "../../components/content/meta";
 import { Modal } from "../../components/feedback/Modal";
 import { useToast } from "../../components/feedback/Toast";
 import { Select } from "../../components/forms/Select";
-import { FormField, TextInput } from "../../components/forms/TextInput";
+import { FormField, TextInput, URLInput } from "../../components/forms/TextInput";
+import { LoadingState } from "../../components/feedback/LoadingState";
 import type { Article, ContentType } from "../../data/types";
 import { findExisting, looksLikeUrl } from "./catalogue";
 import { ExtractError, extractLink } from "./extractClient";
@@ -166,19 +167,15 @@ export function SaveContentDialog({ open, onClose }: { open: boolean; onClose: (
         }}
       >
         <FormField label="Link" htmlFor={ids.url} error={error || undefined}>
-          <TextInput
+          <URLInput
             id={ids.url}
-            icon="link"
             value={url}
             onChange={(e) => {
               setUrl(e.target.value);
               if (step !== "paste" && step !== "fetching") setStep("paste");
             }}
-            placeholder="Paste a link — article, newsletter, video"
             status={step === "fetching" ? "loading" : step === "preview" || step === "duplicate" ? "valid" : error ? "error" : undefined}
             data-autofocus
-            inputMode="url"
-            autoComplete="off"
           />
         </FormField>
 
@@ -199,13 +196,7 @@ export function SaveContentDialog({ open, onClose }: { open: boolean; onClose: (
         )}
 
         {step === "fetching" && (
-          <div className="save__loading" role="status">
-            <span className="field__spinner" aria-hidden="true" />
-            <span>
-              <span className="type-label-sm">Reading the page…</span>
-              <span className="type-caption muted"> Title, author, text and a thumbnail</span>
-            </span>
-          </div>
+          <LoadingState title="Reading the page…" detail="Title, author, text and a thumbnail" />
         )}
 
         {(step === "preview" || step === "duplicate") && draft && <div className="save__preview"><ArticleCard article={draft} layout="compact" state={getState(draft.id)} onBookmark={() => {}} /></div>}

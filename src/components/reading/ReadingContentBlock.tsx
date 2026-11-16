@@ -1,5 +1,6 @@
 import type { ContentBlock, Highlight } from "../../data/types";
 import { imageSrc } from "../content/ArticleMedia";
+import { TextHighlight } from "./TextHighlight";
 import "./reading.css";
 
 /**
@@ -28,18 +29,17 @@ function Segments({ block, highlights, activeHighlight, onHighlightClick }: Omit
     const content = s < leadEnd ? <strong className="reading-block__lead-in">{chunk}</strong> : chunk;
     parts.push(
       h ? (
-        <mark
+        <TextHighlight
           key={s}
-          className={`text-highlight text-highlight--${h.color ?? "honey"} ${activeHighlight === h.groupId ? "is-active" : ""} ${h.note ? "has-note" : ""}`}
-          data-highlight-id={h.id}
-          tabIndex={0}
-          role="button"
-          aria-label={`Highlight${h.note ? " with note" : ""}: ${h.text.slice(0, 60)}`}
-          onClick={(e) => onHighlightClick?.(h, e.currentTarget)}
-          onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), onHighlightClick?.(h, e.currentTarget))}
+          color={h.color}
+          withNote={!!h.note}
+          active={activeHighlight === h.groupId}
+          highlightId={h.id}
+          label={`Highlight${h.note ? " with note" : ""}: ${h.text.slice(0, 60)}`}
+          onActivate={(el) => onHighlightClick?.(h, el)}
         >
           {content}
-        </mark>
+        </TextHighlight>
       ) : (
         <span key={s}>{content}</span>
       ),

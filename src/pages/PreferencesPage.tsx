@@ -7,7 +7,7 @@ import { FormField, TextInput } from "../components/forms/TextInput";
 import { Toggle } from "../components/forms/Toggle";
 import { MobileTopBar } from "../components/navigation/MobileTopBar";
 import { ThemeSwitcher } from "../components/navigation/ThemeSwitcher";
-import { ReadingPreferencesPanel } from "../components/reading/ReadingPreferences";
+import { ReadingPreferences } from "../components/reading/ReadingPreferences";
 import { userProfile } from "../data/seed";
 import type { Density } from "../data/types";
 import "./pages.css";
@@ -66,7 +66,7 @@ export function PreferencesPage() {
               </h3>
               <p className="type-body-sm muted-2">Tuned for long-form. Changes preview below.</p>
             </header>
-            <ReadingPreferencesPanel embedded />
+            <ReadingPreferences embedded />
             <div
               className="prefs-preview"
               style={{

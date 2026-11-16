@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { useStore } from "../../app/store";
 import { Button } from "../../components/actions/Button";
 import { TextButton } from "../../components/actions/TextLink";
-import { ContentCover } from "../../components/content/ContentCover";
+import { CollectionOption } from "../../components/content/CollectionOption";
 import { Modal } from "../../components/feedback/Modal";
 import { useToast } from "../../components/feedback/Toast";
-import { Checkbox } from "../../components/forms/Checkbox";
 import { SearchInput } from "../../components/forms/SearchInput";
 import { TextInput } from "../../components/forms/TextInput";
 import "./collections.css";
@@ -73,16 +72,7 @@ export function AddToCollectionDialog({ articleIds, open, onClose, onDone }: { a
       <SearchInput value={query} onChange={setQuery} label="Find a collection" placeholder="Find a collection" />
       <div className="collection-options">
         {list.map((c) => (
-          <label key={c.id} className={`collection-option ${picked[c.id] ? "is-selected" : ""}`}>
-            <span className="collection-option__thumb" aria-hidden="true">
-              <ContentCover tone={c.covers[2]} />
-            </span>
-            <span className="collection-option__text">
-              <span className="type-label-md">{c.name}</span>
-              <span className="type-caption muted">{c.articleIds.length} pieces</span>
-            </span>
-            <Checkbox checked={!!picked[c.id]} onChange={(v) => setPicked((p) => ({ ...p, [c.id]: v }))} label={`Add to ${c.name}`} hideLabel />
-          </label>
+          <CollectionOption key={c.id} collection={c} selected={!!picked[c.id]} onChange={(v) => setPicked((p) => ({ ...p, [c.id]: v }))} />
         ))}
       </div>
       {creating ? (

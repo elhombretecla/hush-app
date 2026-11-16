@@ -22,6 +22,11 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function T
   );
 });
 
+/** Penpot URLInput — State: Default · Focus (CSS) · Loading · Valid · Error. */
+export const URLInput = forwardRef<HTMLInputElement, Omit<TextInputProps, "icon">>(function URLInput(props, ref) {
+  return <TextInput ref={ref} icon="link" inputMode="url" autoComplete="off" placeholder="Paste a link — article, newsletter, video" {...props} />;
+});
+
 export function TextArea({ className = "", maxLength = 500, value, ...rest }: TextareaHTMLAttributes<HTMLTextAreaElement> & { value: string }) {
   return (
     <div className={`field field--area ${className}`}>

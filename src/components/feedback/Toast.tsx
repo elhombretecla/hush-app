@@ -11,6 +11,21 @@ interface ToastData {
   action?: { label: string; onClick: () => void };
 }
 
+/** Penpot Toast — Tone: Neutral · Success · Error, with one optional action. */
+export function Toast({ tone, message, action, onAction }: { tone: ToastTone; message: string; action?: string; onAction?: () => void }) {
+  return (
+    <div className={`toast toast--${tone}`}>
+      <Icon name={tone === "success" ? "check" : tone === "error" ? "close" : "archive"} />
+      <span className="toast__message">{message}</span>
+      {action && (
+        <button type="button" className="toast__action" onClick={onAction}>
+          {action}
+        </button>
+      )}
+    </div>
+  );
+}
+
 const ToastContext = createContext<(t: Omit<ToastData, "id">) => void>(() => {});
 export const useToast = () => useContext(ToastContext);
 
@@ -28,22 +43,16 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       {children}
       <div className="toast-region" role="status" aria-live="polite">
         {toast && (
-          <div className={`toast toast--${toast.tone}`} key={toast.id}>
-            <Icon name={toast.tone === "success" ? "check" : toast.tone === "error" ? "close" : "archive"} />
-            <span className="toast__message">{toast.message}</span>
-            {toast.action && (
-              <button
-                type="button"
-                className="toast__action"
-                onClick={() => {
-                  toast.action?.onClick();
-                  setToast(null);
-                }}
-              >
-                {toast.action.label}
-              </button>
-            )}
-          </div>
+          <Toast
+            key={toast.id}
+            tone={toast.tone}
+            message={toast.message}
+            action={toast.action?.label}
+            onAction={() => {
+              toast.action?.onClick();
+              setToast(null);
+            }}
+          />
         )}
       </div>
     </ToastContext.Provider>

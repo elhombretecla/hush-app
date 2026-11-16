@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import { AppSidebar } from "../components/navigation/AppSidebar";
+import { DesktopSidebar } from "../components/navigation/DesktopSidebar";
 import { MobileBottomNavigation } from "../components/navigation/MobileBottomNavigation";
 import { SaveContentDialog } from "../features/save/SaveContentDialog";
 import { SaveDialogContext } from "./SaveDialogContext";
@@ -18,7 +18,7 @@ export function AppShell() {
       </a>
       <div className="app-shell">
         <div className="only-desktop">
-          <AppSidebar onSave={open} />
+          <DesktopSidebar onSave={open} />
         </div>
         <div className="app-shell__main">
           <Outlet />
