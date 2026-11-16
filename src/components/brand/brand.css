@@ -1,0 +1,27 @@
+.wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: -0.035em;
+  line-height: 1;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+.wordmark--reversed {
+  color: var(--palette-paper-50);
+}
+.wordmark__period {
+  display: inline-block;
+  width: 0.16em;
+  height: 0.16em;
+  margin-left: 0.04em;
+  border-radius: var(--radius-full);
+  background: var(--color-accent-clay);
+}
+.wordmark--reversed .wordmark__period {
+  background: var(--palette-clay-300);
+}
+.app-icon {
+  flex: none;
+}

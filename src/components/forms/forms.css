@@ -1,0 +1,149 @@
+/* ---------- Field shell (TextInput · SearchInput · URLInput) ---------- */
+.field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--size-touch-min);
+  padding: 0 14px;
+  background: var(--input-bg);
+  border: var(--border-width-hairline) solid var(--input-border);
+  border-radius: var(--input-radius);
+  color: var(--color-icon-secondary);
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+.field:focus-within {
+  border-color: var(--input-border-focus);
+  box-shadow: inset 0 0 0 1px var(--input-border-focus);
+}
+.field input,
+.field textarea {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: var(--type-body-md-font-family);
+  font-size: var(--type-body-md-font-size);
+}
+.field input::placeholder,
+.field textarea::placeholder { color: var(--input-placeholder); }
+.field input[type="search"]::-webkit-search-cancel-button { display: none; }
+.field.is-error { border-color: var(--color-feedback-error); box-shadow: inset 0 0 0 0.5px var(--color-feedback-error); }
+.field.is-disabled { background: var(--color-bg-muted); border-color: var(--color-border-subtle); }
+.field__kbd {
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-muted);
+  color: var(--color-text-tertiary);
+  font-family: var(--type-caption-font-family);
+  font-size: var(--type-caption-font-size);
+}
+.field__clear { display: grid; place-items: center; color: var(--color-icon-secondary); border-radius: var(--radius-sm); }
+.field__clear:hover { color: var(--color-icon-primary); }
+.field__valid { color: var(--color-feedback-success); }
+.field__invalid { color: var(--color-feedback-error); }
+.field__spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  border: var(--border-width-thick) solid var(--color-border-default);
+  border-top-color: var(--color-action-primary);
+  animation: spin 800ms linear infinite;
+}
+.field--area { flex-direction: column; align-items: stretch; padding: 12px 14px; gap: var(--space-8); }
+.field--area textarea { resize: vertical; min-height: 72px; line-height: var(--type-body-md-line-height); }
+.field__counter { align-self: flex-end; font-size: var(--type-caption-font-size); color: var(--color-text-tertiary); }
+
+.form-field { display: flex; flex-direction: column; gap: var(--space-8); }
+.form-field__label-row { display: flex; justify-content: space-between; align-items: baseline; color: var(--color-text-primary); }
+.form-error { display: flex; gap: 6px; align-items: flex-start; color: var(--color-feedback-error); font-size: var(--type-body-sm-font-size); line-height: var(--type-body-sm-line-height); }
+.form-error__mark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  border-radius: var(--radius-full);
+  background: var(--color-feedback-error-subtle);
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+}
+
+/* ---------- Checkbox ---------- */
+.checkbox { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; color: var(--color-text-primary); font-size: var(--type-body-sm-font-size); }
+.checkbox input { position: absolute; opacity: 0; width: 20px; height: 20px; margin: 0; cursor: pointer; }
+.checkbox__box {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  flex: none;
+  border-radius: var(--radius-sm);
+  border: var(--border-width-medium) solid var(--color-border-strong);
+  background: var(--input-bg);
+  color: var(--color-text-on-action);
+}
+.checkbox input:checked + .checkbox__box { background: var(--color-action-primary); border-color: var(--color-action-primary); }
+.checkbox input:focus-visible + .checkbox__box { box-shadow: 0 0 0 var(--border-width-focus) var(--color-focus-ring); }
+.checkbox.is-disabled { color: var(--color-text-disabled); }
+
+/* ---------- Toggle ---------- */
+.toggle-row { position: relative; display: flex; align-items: center; justify-content: space-between; gap: var(--space-24); cursor: pointer; }
+.toggle-row__text { display: flex; flex-direction: column; gap: 2px; color: var(--color-text-primary); }
+.toggle__input { position: absolute; right: 0; width: 40px; height: 24px; opacity: 0; margin: 0; cursor: pointer; }
+.toggle {
+  display: flex;
+  align-items: center;
+  flex: none;
+  width: 40px;
+  height: 24px;
+  padding: 3px;
+  border-radius: var(--radius-full);
+  background: var(--color-border-default);
+  transition: background-color 160ms ease;
+}
+.toggle__knob { width: 18px; height: 18px; border-radius: var(--radius-full); background: var(--color-bg-surface); box-shadow: var(--shadow-sm); transition: transform 160ms ease; }
+.toggle__input:checked + .toggle { background: var(--color-action-primary); }
+.toggle__input:checked + .toggle .toggle__knob { transform: translateX(16px); }
+.toggle__input:focus-visible + .toggle { box-shadow: 0 0 0 var(--border-width-focus) var(--color-focus-ring); }
+
+/* ---------- Select ---------- */
+.select { position: relative; }
+.select__trigger { width: 100%; cursor: pointer; text-align: left; }
+.select__trigger.is-open { border-color: var(--input-border-focus); box-shadow: inset 0 0 0 1px var(--input-border-focus); }
+.select__value { flex: 1; color: var(--color-text-primary); }
+.select__value.muted { color: var(--input-placeholder); }
+.select__dot { width: 8px; height: 8px; flex: none; border-radius: var(--radius-full); background: var(--color-border-default); }
+.select__dot--moss { background: var(--color-accent-moss); }
+.select__dot--clay { background: var(--color-accent-clay); }
+.select__dot--honey { background: var(--color-accent-honey); }
+.select__menu {
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  right: 0;
+  top: calc(100% + 6px);
+  padding: 6px;
+  background: var(--color-bg-elevated);
+  border: var(--border-width-hairline) solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+.select__menu button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: var(--radius-sm);
+  font-size: var(--type-body-sm-font-size);
+  color: var(--color-text-primary);
+  text-align: left;
+}
+.select__menu button span:nth-child(2) { flex: 1; }
+.select__menu button:hover { background: var(--color-bg-muted); }
+.select__menu button.is-selected { background: var(--color-bg-selected); }
+.select__menu svg { color: var(--color-icon-accent); }
